@@ -1,0 +1,160 @@
+name: Build PolarScheduler with Github Actions
+on: 
+  pull_request:
+    branches:
+      - '**'
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  Build-PolarScheduler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish reminder
+        uses: actions/github-script@v4.0.2
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Reminder: Wait until Github Actions has finished running the build before merging this PR!'
+            })
+                    
+    
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls -la ${{ github.workspace }}
+     
+      
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3.9.0
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      
+      - name: Build PolarScheduler with Maven
+        run: cd PolarScheduler && mvn --batch-mode --update-snapshots clean test pmd:pmd spotbugs:spotbugs checkstyle:checkstyle
+ 
+      - name: Generate coverage badges
+        id: jacoco
+        run: > 
+            python3 .github/generate_badge.py "PolarScheduler/target/site/jacoco-ut/jacoco.csv"
+            ".github/badges" "jacoco.svg" "branches.svg" "true" "true"
+            "fail" "80" "0" "false" "false" "100 90 80 70 60 0" "#4c1 #97ca00 #a4a61d #dfb317 #fe7d37 #e05d44" "true"
+            
+            
+      - name: Log coverage percentage
+        if: always()
+        run: |
+          echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
+          echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
+          
+      - name: Check coverage across all classes
+        if: always()
+        run: |
+          chmod +x .github/testingChecker.sh
+          .github/testingChecker.sh
+        shell: bash
+          
+      - name: Add coverage to PR
+        id: publishJacoco
+        if: ${{ always() }}
+        uses: Madrapps/jacoco-report@v1.2
+        with:
+          paths: ${{ github.workspace }}/PolarScheduler/target/site/jacoco-ut/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 80
+          min-coverage-changed-files: 80    
+      
+      - name: Publish Test Report
+        if: ${{ always() }}
+        uses: ScaCap/action-surefire-report@v1.2.0
+        with:
+          check_name: Student Test Results
+      
+          
+      - name: Publish SpotBugs Report
+        if: always()
+        uses: kpresler/spotbugs-github-action@master
+        with:
+          path: '**/spotbugsXml.xml'
+          
+      - name: Publish PMD Report
+        if: always()
+        uses: kpresler/pmd-github-action@master
+        with:
+          path: '**/pmd.xml'
+          
+      - name: Publish CheckStyle Report
+        if: always()
+        uses: kpresler/checkstyle-github-action@master
+        with:
+          path: '**/checkstyle-result.xml'
+          
+      - name: Clear `.class` files to prepare running TS tests
+        run: find . -name "*Test*.class" -type f -delete
+          
+      - name: Fetch hidden TS tests
+        shell: bash
+        env:
+          TSPW: ${{ secrets.TILDESITEFILEPASSWORD }}
+        run: |
+          export URL="https://tildesites.bowdoin.edu/~k.preslermarshall/download.php?file=2335_Project0_Tests.tar.gz&pw=$TSPW"
+          wget -O Project0_Tests.tar.gz "$URL"
+          
+      - name: Extract & clean up tests
+        shell: bash
+        run: |
+          tar -xvzf  Project0_Tests.tar.gz -C PolarScheduler/target/test-classes/
+          rm -rf PolarScheduler/target/surefire-reports/*
+          rm -rf Project0_Tests.tar.gz
+          Course_Found=$(find . -name "*Course.java" -type f | wc -l)
+          AL_Found=$(find . -name "*ArrayList.java" -type f | wc -l)
+          PS_Found=$(find . -name "*PolarScheduler.java" -type f | wc -l)
+          export MISSING=false
+          if [[ $Course_Found -eq 0 ]]; then
+            find . -name "TS_CourseTest.class" -type f -delete
+            export MISSING=true
+          fi
+          if [[ $AL_Found -eq 0 ]]; then
+            find . -name "TS_ArrayListTest.class" -type f -delete
+            export MISSING=true
+          fi
+          if [[ $PS_Found -eq 0 ]]; then
+            find . -name "TS_PolarSchedulerTest.class" -type f -delete
+            export MISSING=true
+          fi
+          echo $MISSING
+          echo "MISSING_FILES=$(echo $MISSING)" >> $GITHUB_ENV
+  
+      - name: Run TS Tests
+        run: cd PolarScheduler && mvn --batch-mode surefire:test
+
+         
+      - name: Publish TS_Test Report
+        if: ${{ always() }}
+        uses: ScaCap/action-surefire-report@v1.2.0
+        with:
+          check_name: Teaching Staff Test Results
+          
+      - name: Clean up temporary files
+        if: always()
+        run: |
+          cd PolarScheduler && mvn clean
+          
+      - name: Make sure all tests were run
+        if: always()
+        run: |
+          if [ ${{ env.MISSING_FILES }} = true ] ; then
+              echo "One or more of the expected source files were not found.  Your project is probably not complete!"
+              exit 1
+          fi
