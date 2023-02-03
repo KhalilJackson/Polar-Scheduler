@@ -7,11 +7,11 @@ pwd
 
 # Check if there are PMD alerts related to JUnit
 # If so, FAIL
-numJUnitTests=$(grep -R "JUnitTests" ./PolarScheduler/target/pmd.xml | wc -l)
-numJUnit4Tests=$(grep -R "JUnit4Test" ./PolarScheduler/target/pmd.xml | wc -l)
-numTestClass=$(grep -R "TestClass" ./PolarScheduler/target/pmd.xml | wc -l)
-numAssertion=$(grep -R "Assertion" ./PolarScheduler/target/pmd.xml | wc -l)
-numUseAssert=$(grep -R "UseAssert" ./PolarScheduler/target/pmd.xml | wc -l)
+numJUnitTests=$(grep -R "JUnitTests" ../PolarScheduler/target/pmd.xml | wc -l)
+numJUnit4Tests=$(grep -R "JUnit4Test" ../PolarScheduler/target/pmd.xml | wc -l)
+numTestClass=$(grep -R "TestClass" ../PolarScheduler/target/pmd.xml | wc -l)
+numAssertion=$(grep -R "Assertion" ../PolarScheduler/target/pmd.xml | wc -l)
+numUseAssert=$(grep -R "UseAssert" ../PolarScheduler/target/pmd.xml | wc -l)
 totalAlerts=$((numJUnitTests + numJUnit4Tests + numTestClass + numAssertion + numUseAssert))
 echo "Project contains $totalAlerts JUnit-related PMD alerts"
 if [ "$totalAlerts" -gt "0" ]
@@ -22,7 +22,7 @@ fi
 
 # Assertion count
 # Does not affect build, only FYI
-numAsserts=$(grep -R "assert" ./PolarScheduler/src/test/ | wc -l)
+numAsserts=$(grep -R "assert" ../PolarScheduler/src/test/ | wc -l)
 echo "Project contains $numAsserts total assert statements"
 
 
@@ -31,7 +31,7 @@ echo "Project contains $numAsserts total assert statements"
 # Checks if any method is not covered
 # Checks if any non-UI class does not have the specified coverage threshold
 
-INPUT="./PolarScheduler/target/site/jacoco-ut/jacoco.csv"
+INPUT="../PolarScheduler/target/site/jacoco-ut/jacoco.csv"
 HEADER="CLASS"
 ARG=80
 THRESHOLD=$(($ARG * 10))

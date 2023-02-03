@@ -10,7 +10,7 @@ on:
 
 jobs:
   Build-PolarScheduler:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Publish reminder
         uses: actions/github-script@v4.0.2
@@ -21,7 +21,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Reminder: Wait until Github Actions has finished running the build before merging this PR!'
+              body: 'Reminder: Wait until GitHub Actions has finished running the build before merging this PR!'
             })
                     
     
@@ -42,9 +42,24 @@ jobs:
 
       
       - name: Build PolarScheduler with Maven
-        run: cd PolarScheduler && mvn --batch-mode --update-snapshots clean test pmd:pmd spotbugs:spotbugs checkstyle:checkstyle
+        run: cd PolarScheduler && mvn --batch-mode --update-snapshots clean test pmd:pmd spotbugs:spotbugs checkstyle:checkstyle -Dmaven.test.failure.ignore=true > student_build.txt 2>&1
+ 
+      - name: Make sure all student tests passed
+        run: |
+          cd PolarScheduler
+          error=$(cat student_build.txt | grep "ERROR" | wc -l)
+          failure=$(cat student_build.txt | grep "FAILURE" | wc -l)
+          if [ $failure -gt 0 ] || [ $error -gt 0 ]; then
+            echo "$(tput -T linux setaf 1)Found failing tests -- click on the \"Student Test Results\" link on the left side for details.  Teaching Staff testcases *will not be run* until your tests are fixed$(tput -T linux sgr 0)"
+            rm -rf student_build.txt
+            exit 127
+          else
+            echo "$(tput -T linux setaf 2)All of your tests passed$(tput -T linux sgr 0)"
+            rm -rf student_build.txt
+          fi
  
       - name: Generate coverage badges
+        if: always()
         id: jacoco
         run: > 
             python3 .github/generate_badge.py "PolarScheduler/target/site/jacoco-ut/jacoco.csv"
@@ -55,20 +70,25 @@ jobs:
       - name: Log coverage percentage
         if: always()
         run: |
-          echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
-          echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
+          line=$(bc <<< 'scale=2; 100 * ${{ steps.jacoco.outputs.coverage }} / 1')
+          branch=$(bc <<< 'scale=2; 100 * ${{ steps.jacoco.outputs.branches }} / 1')
+          echo "line coverage = $line percent"
+          echo "branch coverage = $branch percent"
           
-      - name: Check coverage across all classes
+      - name: Check coverage across all classes & make sure there are no JUnit-related PMD alerts
         if: always()
         run: |
+          echo "INSUFFICIENT_TESTS=1" >> $GITHUB_ENV
           chmod +x .github/testingChecker.sh
-          .github/testingChecker.sh
+          cd .github
+          ./testingChecker.sh
+          echo "INSUFFICIENT_TESTS=$?" >> $GITHUB_ENV
         shell: bash
           
       - name: Add coverage to PR
         id: publishJacoco
         if: ${{ always() }}
-        uses: Madrapps/jacoco-report@v1.2
+        uses: Madrapps/jacoco-report@v1.3
         with:
           paths: ${{ github.workspace }}/PolarScheduler/target/site/jacoco-ut/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -88,11 +108,24 @@ jobs:
         with:
           path: '**/spotbugsXml.xml'
           
-      - name: Publish PMD Report
+      - name: Clean up PMD report to display just JUnit warnings
         if: always()
+        run: |
+          python3 .github/pmd_subset.py 
+          
+      - name: Publish PMD Report
+        if: always() 
         uses: kpresler/pmd-github-action@master
         with:
           path: '**/pmd.xml'
+          name: All PMD Warnings
+          
+      - name: Publish High-Priority JUnit PMD Report
+        if: always() 
+        uses: kpresler/pmd-github-action@master
+        with:
+          path: '**/junit_alerts.xml'
+          name: High-Priority JUnit PMD Warnings
           
       - name: Publish CheckStyle Report
         if: always()
@@ -101,7 +134,10 @@ jobs:
           path: '**/checkstyle-result.xml'
           
       - name: Clear `.class` files to prepare running TS tests
-        run: find . -name "*Test*.class" -type f -delete
+        if: always()
+        run: |
+          find . -name "*Test*.class" -type f -delete
+          rm -rf PolarScheduler/target/surefire-reports/*
           
       - name: Fetch hidden TS tests
         shell: bash
@@ -115,7 +151,6 @@ jobs:
         shell: bash
         run: |
           tar -xvzf  Project0_Tests.tar.gz -C PolarScheduler/target/test-classes/
-          rm -rf PolarScheduler/target/surefire-reports/*
           rm -rf Project0_Tests.tar.gz
           Course_Found=$(find . -name "*Course.java" -type f | wc -l)
           AL_Found=$(find . -name "*ArrayList.java" -type f | wc -l)
@@ -136,8 +171,15 @@ jobs:
           echo $MISSING
           echo "MISSING_FILES=$(echo $MISSING)" >> $GITHUB_ENV
   
-      - name: Run TS Tests
-        run: cd PolarScheduler && mvn --batch-mode surefire:test
+      - name: Run all Teaching Staff testcases
+        if: always()
+        run: |
+          if [[ ${{ env.INSUFFICIENT_TESTS }} -eq 0 ]]; then
+            cd PolarScheduler && mvn --batch-mode surefire:test
+          else
+            echo "$(tput -T linux setaf 1)Your tests contain 1 or more JUnit-related PMD alerts or their is insufficient coverage.  TS tests will not be run$(tput -T linux sgr 0)"
+            exit 37
+          fi
 
          
       - name: Publish TS_Test Report
