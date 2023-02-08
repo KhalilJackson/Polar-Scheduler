@@ -12,7 +12,6 @@ import java.util.Collection;
  */
 public class ArrayList<E> extends AbstractList<E> {
 	
-
 	
 	  /**
 	   * Default starting array capacity if not specified.
@@ -41,7 +40,7 @@ public class ArrayList<E> extends AbstractList<E> {
 		Object[] myArray = new Object[INIT_SIZE];
 		list = (E[]) myArray;
 		size = 0;
-	  }
+	}
 	
 	  /**
 	   * Construct a new list with the default starting capacity.
