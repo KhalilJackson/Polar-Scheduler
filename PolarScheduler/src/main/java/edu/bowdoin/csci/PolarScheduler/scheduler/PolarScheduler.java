@@ -1,15 +1,22 @@
 package edu.bowdoin.csci.PolarScheduler.scheduler;
 
 import edu.bowdoin.csci.PolarScheduler.course.Course;
+import edu.bowdoin.csci.PolarScheduler.utils.ArrayList;
 
 public class PolarScheduler {
 	
 	private String title;
 	
+	private ArrayList<Course> catalogue;
+	
+	private ArrayList<Course> schedule;
+	
 	
 	public PolarScheduler() {
 		
-		
+		this.title = "My Schedule";
+		this.catalogue = new ArrayList<Course>();
+		this.schedule = new ArrayList<Course>();
 		
 	}
 	

@@ -17,68 +17,76 @@ public class CourseTest {
 	}
 	
 	
+	/**
+	* Tests the construction and setting of course names.
+	* 
+	* @return String representation of Course
+	 */
 	@Test
     public void testInvalidCourseNames() {
 		
 		
-		
-
+		//Attempting to catch null name attempts
         try {
             course = new Course(null, "branch", "30 college", "Zubin", "Bronco");
-            Assertions.fail("Trying to set a `null` Course name should throw an IllegalArgumentException, but did not");           
+            Assertions.fail("Trying to set a `null` course name should throw an IllegalArgumentException, but did not");           
             
         } catch (IllegalArgumentException iae) {
             // Exception expected, carry on
         }
         
-        
+        //Attempting to catch a name that is too short
         try {
         	course = new Course("E 1111", "branch", "30 college", "Zubin", "Bronco");
-            Assertions.fail("Trying to set a too few characters should throw an IllegalArgumentException, but did not");           
+            Assertions.fail("Trying to set a course name with too few characters should throw an IllegalArgumentException, but did not");           
             
         } catch (IllegalArgumentException iae) {
             // Exception expected, carry on
         }
         
-        
+        //Attempting to catch a name that is too long
         try {
         	course = new Course("HESFQ 1101", "branch", "30 college", "Zubin", "Bronco");
-            Assertions.fail("Trying to set a too many  should throw an IllegalArgumentException, but did not");           
+            Assertions.fail("Trying to set a course name with too many characters should throw an IllegalArgumentException, but did not");           
             
         } catch (IllegalArgumentException iae) {
             // Exception expected, carry on
         }
         
-        
+        //Attempting to catch a name with no letters
         try {
         	course = new Course("101", "branch", "30 college", "Zubin", "Bronco");
-            Assertions.fail("Trying to set a `null` Course name should throw an IllegalArgumentException, but did not");           
+            Assertions.fail("Trying to set a course name with no letters should throw an IllegalArgumentException, but did not");           
             
         } catch (IllegalArgumentException iae) {
             // Exception expected, carry on
         } 
         
-        
+        //Attempting to catch a name that has a space
         try {
         	course = new Course("CSCI 11", "branch", "30 college", "Zubin", "Bronco");
-            Assertions.fail("Trying to set a `null` Course name should throw an IllegalArgumentException, but did not");           
+            Assertions.fail("Trying to set a course name with a space should throw an IllegalArgumentException, but did not");           
             
         } catch (IllegalArgumentException iae) {
             // Exception expected, carry on
         } 
         
-        
+        //Attempting to catch a name with a special character
         try {
         	course = new Course("CSCI\t1103", "branch", "30 college", "Zubin", "Bronco");
-            Assertions.fail("Trying to set a `null` Course name should throw an IllegalArgumentException, but did not");           
+            Assertions.fail("Trying to set a course name woth \t should throw an IllegalArgumentException, but did not");           
             
         } catch (IllegalArgumentException iae) {
             // Exception expected, carry on
         } 
-        
         
     }
 	
+	/**
+	* Returns a comma separated value String of all Course fields.
+	* 
+	* @return String representation of Course
+	 */
 	@Test
 	public void testValidCourseNames() {
 
@@ -94,6 +102,11 @@ public class CourseTest {
 	}
 	
 	
+	/**
+	* Returns a comma separated value String of all Course fields.
+	* 
+	* @return String representation of Course
+	 */
 	@Test
 	public void testInvalidCourseTitles() {
 		
@@ -181,7 +194,7 @@ public class CourseTest {
 	    try {
 
 	        course.setInstructorId(null);
-	        Assertions.fail("Trying to set an empty string as course section should throw an IllegalArgumentException, but did not");           
+	        Assertions.fail("Trying to set an empty string as an instructor is should throw an IllegalArgumentException, but did not");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
@@ -371,7 +384,7 @@ public class CourseTest {
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 1600, 1200);
-	        Assertions.fail("Two As");           
+	        Assertions.fail("Day is A while there are start and end times");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
@@ -380,7 +393,7 @@ public class CourseTest {
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 0000, 1000);
-	        Assertions.fail("Two As");           
+	        Assertions.fail("Day is A with an end time");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
@@ -389,7 +402,7 @@ public class CourseTest {
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 1000, 0000);
-	        Assertions.fail("Two As");           
+	        Assertions.fail("Day is A with a start time");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
