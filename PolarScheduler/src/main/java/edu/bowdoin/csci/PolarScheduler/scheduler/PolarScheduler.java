@@ -58,19 +58,19 @@ public class PolarScheduler {
 		
 	}
 	
-	public String[] getCourseCatalogue() {
+	public String[][] getCourseCatalogue() {
 		
 		return null;
 	}
 	
 	
-	public String[] getScheduledCourses() {
+	public String[][] getScheduledCourses() {
 		
 		return null;
 	}
 	
 	
-	public String[] getFullScheduledCourses() {
+	public String[][] getFullScheduledCourses() {
 		
 		return null;
 	}

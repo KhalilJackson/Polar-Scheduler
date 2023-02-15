@@ -103,15 +103,8 @@ public class Course {
 		setTitle(title);
 		setSection(section);
 		setInstructorId(instructorId);
-		this.meetingDays = meetingDays;
-		//second constructor that only takes the string, not a separate method
-		//setMeetingDays(meetingDays);
+		setMeetingDays(meetingDays);
 		
-//		this.name = name;
-//		this.title = title;
-//		this.section = section;
-//		this.instructorId = instructorId;
-//		this.meetingDays = meetingDays;
 	}
 	
 	
@@ -120,23 +113,51 @@ public class Course {
 		super();
 		
 		
-		//setName(name);
-		
+		setName(name);
 		setTitle(title);
 		setSection(section);
 		setInstructorId(instructorId);
 		setMeetingDaysAndTime(meetingDays, startTime, endTime);
-		
-		
-//		this.name = name;
-//		this.title = title;
-//		this.section = section;
-//		this.instructorId = instructorId;
-//		this.meetingDays = meetingDays;
-//		this.startTime = startTime;
-//		this.endTime = endTime;
 	}
 	
+	
+	public void setMeetingDays(String s) {
+		
+		//Creates a hash set to get rid of duplicate characters
+				Set<Character> check = new HashSet<Character>();
+				
+				//Add characters to the set
+				for (int i = 0; i < s.length(); i++) {
+					
+					check.add(s.charAt(i));
+				}
+				
+				//If there are duplicates, throw exception
+				if (s.length() != check.size()) {
+					throw new IllegalArgumentException();
+				}
+				
+				//If days are not of acceptable characters, throw exception		
+				for (char day: check) {
+					
+					if ((day == 'M') || (day == 'T') || (day == 'W') || (day == 'H') || (day == 'F') || (day == 'A')) {
+						
+					} else {
+						throw new IllegalArgumentException();
+					}
+				}
+				
+				//If there is an A, make sure it is the only meeting day
+				//Also ensures start and end times are set to zero
+				if ((s.contains("A"))) {
+					
+					if ((s.length() > 1)) {
+						throw new IllegalArgumentException();
+					}
+					
+				}
+		
+	}
 	
 	public void setMeetingDaysAndTime(String s, int w, int e) {
 		
@@ -201,18 +222,46 @@ public class Course {
 	
 	public String getMeetingString() {
 		
-		//Check 'course meeting string'
-		String timeString = "Class meets from " + startTime + " to " + endTime + " on " + meetingDays;
-		
-		return timeString;
-		
+		if (meetingDays == "A") {
+			
+			return "Arranged";
+		} else {
+			
+			String time = meetingDays + " " + getTimeString(startTime) + "-" + getTimeString(endTime);
+			
+			return time;
+			
+		}
 	}
 	
-	private int getTimeString(int s) {
+	private String getTimeString(int s) {
 		
-		//go form 530 to 5:30am
-		return s;
+		String code;
 		
+		//Cast s to use decimal point
+		float x = s;
+		
+		if (s < 1200) {
+			
+			//Places decimal point in between four digits
+			x = x/100;
+			
+			//Turn float into string where decimal is replaced with colon
+			//and has AM at the end
+			code = Float.toString(x).replace('.', ':') + "AM";
+			return code;	
+			
+		} else {
+			
+			//Subtracts by 1200 so we can do same math as before
+			x = (x - 1200)/100;
+			
+			//Turns into a formatted string with PM
+			code = Float.toString(x).replace('.', ':') + "PM";		
+			return code; 
+			
+		}
+			
 	}
 	
 	@Override
