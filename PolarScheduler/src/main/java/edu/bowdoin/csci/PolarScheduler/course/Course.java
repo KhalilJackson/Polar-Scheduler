@@ -6,14 +6,14 @@ import java.util.Set;
 
 public class Course {
 	
-	private static final int MIN_NAME_LENGTH = 4;
-	private static final int MAX_NAME_LENGTH = 10;
-	private static final int MIN_LETTER_COUNT = 4;
-	private static final int MAX_LETTER_COUNT = 10;
-	private static final int DIGIT_COUNT = 5;
-	private static final int SECTION_LENGTH = 21;
-	private static final int UPPER_HOUR = 12;
-	private static final int UPPER_MINUTE = 12;
+	private static final int MIN_NAME_LENGTH = 8;
+	private static final int MAX_NAME_LENGTH = 9;
+	private static final int MIN_LETTER_COUNT = 3;
+	private static final int MAX_LETTER_COUNT = 4;
+	private static final int DIGIT_COUNT = 4;
+	private static final int SECTION_LENGTH = 4;
+	private static final int UPPER_HOUR = 24;
+	private static final int UPPER_MINUTE = 60;
 	
 	private String name;
 	private String title;
@@ -74,7 +74,7 @@ public class Course {
 	}
 	
 	//What do I do for this?
-	private void setName() {
+	private void setName(String name) {
 		
 		this.name = name;
 		
@@ -99,12 +99,12 @@ public class Course {
 		super();
 		
 		
-		//setName(name);
-		
+		setName(name);
 		setTitle(title);
 		setSection(section);
 		setInstructorId(instructorId);
 		this.meetingDays = meetingDays;
+		//second constructor that only takes the string, not a separate method
 		//setMeetingDays(meetingDays);
 		
 //		this.name = name;
@@ -201,6 +201,7 @@ public class Course {
 	
 	public String getMeetingString() {
 		
+		//Check 'course meeting string'
 		String timeString = "Class meets from " + startTime + " to " + endTime + " on " + meetingDays;
 		
 		return timeString;
@@ -208,6 +209,8 @@ public class Course {
 	}
 	
 	private int getTimeString(int s) {
+		
+		//go form 530 to 5:30am
 		return s;
 		
 	}

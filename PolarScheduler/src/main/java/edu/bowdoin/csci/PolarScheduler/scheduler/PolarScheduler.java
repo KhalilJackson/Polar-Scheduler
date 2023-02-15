@@ -53,6 +53,9 @@ public class PolarScheduler {
 	
 	public void resetSchedule() {
 		
+		//Sets schedule to a new ArrayList to reset
+		schedule = new ArrayList<Course>();
+		
 	}
 	
 	public String[] getCourseCatalogue() {
