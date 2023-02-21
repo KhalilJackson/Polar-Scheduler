@@ -158,20 +158,35 @@ public class PolarSchedulerTest {
 	    	
 	    	Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1120, 1220);
 	    	scheduler.createNewCourse(test);
-	    	Assertions.fail("Should throw IllegalArgumentException for creatign duplicate class but did not");
+	    	Assertions.fail("Should throw IllegalArgumentException for creating duplicate class but did not");
 	                   
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
+	    
+		//Tries to create a duplicate course
+	    try {
+	    	
+	    	Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1120, 1220);
+	    	scheduler.createNewCourse(test);
+	    	Assertions.fail("Should throw IllegalArgumentException for creating duplicate class but did not");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+	    
+	    //
 		
 	    //Tries to create a course with a null start time
 	    try {
 	    	
 	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", , 1220);
-//	    	scheduler.createNewCourse("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
-//	    	Assertions.assertEquals(IllegalArgumentException, null);
-//	    	Assertions.fail("Should throw IllegalArgumentException for missing start time but did not");          
+	    	//scheduler.createNewCourse("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
+	    	//Assertions.assertEquals(IllegalArgumentException, null);
+	    	//Assertions.fail("Should throw IllegalArgumentException for missing start time but did not");          
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on

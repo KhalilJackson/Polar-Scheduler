@@ -8,7 +8,7 @@ import edu.bowdoin.csci.PolarScheduler.utils.ArrayList;
 
 public class CourseTest {
     
-    private Course course = new Course("EOS 1020", "branch", "30 college", "Zubin", "Bronco");
+    private Course course = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW");
 
 	
 	@BeforeEach
@@ -249,72 +249,121 @@ public class CourseTest {
 	public void testInvalidMeetingDaysStartTimesEndTimes() {
 		
 		
+	    try {
+
+	    	course.setMeetingDaysAndTime("Z", 1000, 1200);
+	    	Assertions.fail("Should throw an IllegalArgumentException for unallowed weekday but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }			
+	    
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("MM", 1000, 11000);
+	    	Assertions.fail("Should throw an IllegalArgumentException for duplicate values but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
+	    
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("AM", 1000, 11000);
+	    	Assertions.fail("Should throw an IllegalArgumentException for having more than A in meeting days but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
 		
-	    try {
-
-	    	course.setMeetingDaysAndTime("M", 1, 1);
-	        Assertions.assertEquals("MistakenID", course.getInstructorId());           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }		
-	    
-	    try {
-
-	    	course.setMeetingDaysAndTime("T", 1, 1);
-	        Assertions.assertEquals("MistakenID", course.getInstructorId());           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }		
-	    try {
-
-	    	course.setMeetingDaysAndTime("W", 1, 1);
-	        Assertions.assertEquals("MistakenID", course.getInstructorId());           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }		
-	    try {
-
-	    	course.setMeetingDaysAndTime("H", 1, 1);
-	        Assertions.assertEquals("MistakenID", course.getInstructorId());           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }		
-	    try {
-
-	    	course.setMeetingDaysAndTime("F", 1, 1);
-	        Assertions.assertEquals("MistakenID", course.getInstructorId());           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }		
-	    
-	    try {
-
-	    	course.setMeetingDaysAndTime("A", 1, 1);
-	        Assertions.assertEquals("MistakenID", course.getInstructorId());           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }		
 		
 	    
 	    
 	    try {
 
-	    	course.setMeetingDaysAndTime("M", 1, 1);
-	        Assertions.assertEquals("MistakenID", course.getInstructorId());           
+	    	course.setMeetingDaysAndTime("A", 4000, 1);
+	        Assertions.fail("Star time too big");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }		
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("A", -10, 1);
+	        Assertions.fail("Start time to small");           
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }		
+	    
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("A", 1, 4000);
+	        Assertions.fail("Endtime to BIG");           
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }		
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("A", 1000, -1000);
+	        Assertions.fail("Endtime to SMALL");           
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }		
+	    
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("A", 1600, 1200);
+	        Assertions.fail("Day is A while there are start and end times");           
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }		
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("A", 0000, 1000);
+	        Assertions.fail("Day is A with an end time");           
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }		
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("A", 1000, 0000);
+	        Assertions.fail("Day is A with a start time");           
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }		
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 		
-	    
-	    
-	    
+		
 	    try {
 
 	    	course.setMeetingDaysAndTime("MM", 1, 1);
@@ -416,8 +465,9 @@ public class CourseTest {
 	@Test
 	public void testMeetingString() {
 		
-	    	
-	    	Assertions.assertEquals("Arranged", course.getMeetingString());
+		course = new Course();
+		
+		Assertions.assertEquals("Arranged", course.getMeetingString());
 
 	}
 	

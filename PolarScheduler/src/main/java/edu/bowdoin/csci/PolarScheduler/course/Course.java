@@ -47,7 +47,7 @@ public class Course {
 	public void setSection(String section) {
 		
 		//Ensures section is between 1-4 characters
-		if ((section.length() < 1) || (section.length() < 4)) {
+		if ((section.length() < 1) || (section.length() > 4)) {
 			throw new IllegalArgumentException();
 		} else {
 			this.section = section;
@@ -193,7 +193,7 @@ public class Course {
 				throw new IllegalArgumentException();
 			}
 			
-			if ((w != 0) && (e != 0)) {
+			if ((w != 0) || (e != 0)) {
 				throw new IllegalArgumentException();
 			}
 			
@@ -222,7 +222,7 @@ public class Course {
 	
 	public String getMeetingString() {
 		
-		if (meetingDays == "A") {
+		if ((meetingDays == "A") || (meetingDays == null)) {
 			
 			return "Arranged";
 		} else {
