@@ -26,33 +26,13 @@ public class PolarSchedulerTest {
 	@Test
 	public void testPolarScheduler() {
 		
+		//Ensures constructor creates PolarScheduler with empty ArrayLists
+		//for catalogue and courses with a title of "My schedule"
 		
-		//See if Schedule title set to My Schedule
-	    try {
-	        Assertions.assertEquals("My schedule", scheduler.getScheduleTitle());            
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
-	    
-	    
-	    //See if catalogue is empty
-	    try {
-	        Assertions.assertEquals(null, scheduler.getCourseCatalogue());            
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
-	    
-	    //see if the schedule is empty
-	    try {
-	        Assertions.assertEquals(null, scheduler.getScheduledCourses());            
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
-		
-		
+		Assertions.assertEquals(null, scheduler.getCourseCatalogue());
+		Assertions.assertEquals(null, scheduler.getScheduledCourses());
+		Assertions.assertEquals("My schedule", scheduler.getScheduleTitle());
+			
 	}
 	
 	
@@ -71,18 +51,13 @@ public class PolarSchedulerTest {
 	        // Exception expected, carry on
 	    }
 		
-	    //Tries to create a second course and checks to see if both courses were created
-	    try {
-	    	
-	    	//scheduler.createNewCourse(course1);
-	    	scheduler.createNewCourse(course2);
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
-		
+	    
+	    //Ensures courses were added
+    	//scheduler.createNewCourse(course1);
+    	//scheduler.createNewCourse(course2);
+    	
+    	Assertions.assertEquals(true, scheduler.createNewCourse(course2));
+    	
 	}
 	
 	@Test
@@ -92,24 +67,12 @@ public class PolarSchedulerTest {
     	scheduler.createNewCourse(course2);
 		
 	    //Tries to get course1 and course2
-	    try {
-	    	
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
+    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
+    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
 	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
-		
 	    //Ensures a course that is not in the catalogue returns null
-	    try {
-	    	
-	    	Assertions.assertEquals(null, scheduler.getCourseFromCatalogue("ABDC 1234", "0011"));           
+    	Assertions.assertEquals(null, scheduler.getCourseFromCatalogue("ABDC 1234", "0011"));           
 	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }	
-		
 	}
 	
 	
@@ -275,15 +238,52 @@ public class PolarSchedulerTest {
 	
 	@Test
 	public void testGetCourseCatalogue() {
+    	
+		scheduler.createNewCourse(course1);
+    	scheduler.createNewCourse(course1);	
+    	
+    	String[][] newArray = scheduler.getCourseCatalogue();
+    	String[][] testCatalogue = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}};
 		
-		
+    	Assertions.assertArrayEquals(testCatalogue, newArray);
+    	
+    	
+    	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
+    	scheduler.createNewCourse(course3);	
+    	
+    	newArray = scheduler.getCourseCatalogue();
+    	String[][] testCatalogue1 = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}, {"CSCI 2101", "Computation", "321", "Torres", "TWH", "1020", "1220"}};
+    	
+    	
+    	Assertions.assertArrayEquals(testCatalogue1, newArray);
 		
 	}
 	
 	@Test
 	public void testGetScheduledCourses() {
 		
+		scheduler.createNewCourse(course1);
+    	scheduler.createNewCourse(course1);	
+    	
+    	scheduler.addCourseToSchedule("EOS 1020", "MTW");
+    	scheduler.addCourseToSchedule("CSCI 1101", "TWH");
+    	
+    	
+    	String[][] newArray = scheduler.getScheduledCourses();
+    	String[][] testCatalogue = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}};
 		
+    	Assertions.assertArrayEquals(testCatalogue, newArray);
+    	
+    	
+    	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
+    	scheduler.createNewCourse(course3);	
+    	scheduler.addCourseToSchedule("CSCI 2101", "TWH");
+    	
+    	newArray = scheduler.getScheduledCourses();
+    	
+    	String[][] testCatalogue1 = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}, {"CSCI 2101", "Computation", "321", "Torres", "TWH", "1020", "1220"}};
+    	
+    	Assertions.assertArrayEquals(testCatalogue1, newArray);
 		
 	}
 	
@@ -291,6 +291,32 @@ public class PolarSchedulerTest {
 	public void testGetFullScheduledCourses() {
 		
 		
+		scheduler.createNewCourse(course1);
+    	scheduler.createNewCourse(course1);	
+    	
+    	scheduler.addCourseToSchedule("EOS 1020", "MTW");
+    	scheduler.addCourseToSchedule("CSCI 1101", "TWH");
+    	
+    	
+    	String[][] newArray = scheduler.getScheduledCourses();
+    	String[][] testCatalogue = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}};
+		
+    	Assertions.assertArrayEquals(testCatalogue, newArray);
+    	
+    	
+    	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
+    	scheduler.createNewCourse(course3);	
+    	scheduler.addCourseToSchedule("CSCI 2101", "TWH");
+    	
+    	newArray = scheduler.getScheduledCourses();
+    	
+    	String[][] testCatalogue1 = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}, {"CSCI 2101", "Computation", "321", "Torres", "TWH", "1020", "1220"}};
+    	
+    	Assertions.assertArrayEquals(testCatalogue1, newArray);
+		
+		
+	
+			
 		
 	}
 	
@@ -298,6 +324,17 @@ public class PolarSchedulerTest {
 	public void testSetScheduleTitle() {
 		
 		
+		try {
+			
+			scheduler.setScheduleTitle(null);
+			Assertions.fail("Can't se a title to null");
+			
+		} catch (IllegalArgumentException iae) {	
+			
+		}
+		
+		scheduler.setScheduleTitle("Brenda's Got a Baby");
+		Assertions.assertEquals("Brenda's Got a Baby", scheduler.getScheduleTitle());
 		
 	}
 	
