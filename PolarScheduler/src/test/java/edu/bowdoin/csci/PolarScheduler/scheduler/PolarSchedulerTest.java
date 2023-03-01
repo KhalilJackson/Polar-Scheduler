@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.bowdoin.csci.PolarScheduler.course.Course;
 import edu.bowdoin.csci.PolarScheduler.scheduler.PolarScheduler;
+import edu.bowdoin.csci.PolarScheduler.utils.ArrayList;
 
 public class PolarSchedulerTest {
 	
@@ -26,12 +27,10 @@ public class PolarSchedulerTest {
 	@Test
 	public void testPolarScheduler() {
 		
-		//Ensures constructor creates PolarScheduler with empty ArrayLists
-		//for catalogue and courses with a title of "My schedule"
 		
-		Assertions.assertEquals(null, scheduler.getCourseCatalogue());
-		Assertions.assertEquals(null, scheduler.getScheduledCourses());
-		Assertions.assertEquals("My schedule", scheduler.getScheduleTitle());
+		//Ensures schedule is set to proper title
+		Assertions.assertEquals("My Schedule", scheduler.getScheduleTitle());
+				
 			
 	}
 	
@@ -41,15 +40,14 @@ public class PolarSchedulerTest {
 		
 		
 		//Tries to create the same course twice, which should lead to an error
-	    try {
 	    	
-	    	scheduler.createNewCourse(course1);
-	    	scheduler.createNewCourse(course1);
-	        Assertions.fail("Trying to create a duplicate course should throw an UllegalArgumentException but did not");           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
+    	scheduler.createNewCourse(course1);
+    	Assertions.assertEquals(false, scheduler.createNewCourse(course1));
+    	
+    	
+    	//scheduler.createNewCourse(course1);
+        //Assertions.fail("Trying to create a duplicate course should throw an UllegalArgumentException but did not");           
+        
 		
 	    
 	    //Ensures courses were added
@@ -68,7 +66,7 @@ public class PolarSchedulerTest {
 		
 	    //Tries to get course1 and course2
     	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
-    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
+    	Assertions.assertEquals(course2, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
 	        
 	    //Ensures a course that is not in the catalogue returns null
     	Assertions.assertEquals(null, scheduler.getCourseFromCatalogue("ABDC 1234", "0011"));           
@@ -106,21 +104,19 @@ public class PolarSchedulerTest {
 	}
 	
 	
-	
-	
 	@Test
 	public void testCreateNewCourse2() {
 		
 		//Add courses to catalogue
     	scheduler.createNewCourse(course1);
-    	scheduler.createNewCourse(course1);
-		
+    	scheduler.createNewCourse(course2);
+	                   
+    	Assertions.assertEquals(course2, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));
 		
 		//Tries to create a duplicate course
 	    try {
 	    	
-	    	Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1120, 1220);
-	    	scheduler.createNewCourse(test);
+	    	scheduler.createNewCourse("EOS 1020", "Earth", "123", "Cooler", "MTW", 1120, 1220);
 	    	Assertions.fail("Should throw IllegalArgumentException for creating duplicate class but did not");
 	                   
 	        
@@ -128,12 +124,12 @@ public class PolarSchedulerTest {
 	        // Exception expected, carry on
 	    }
 	    
-		//Tries to create a duplicate course
+		//Tries to create a course with a null startTime
 	    try {
 	    	
-	    	Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1120, 1220);
-	    	scheduler.createNewCourse(test);
-	    	Assertions.fail("Should throw IllegalArgumentException for creating duplicate class but did not");
+	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", null, 1220);
+	    	Assertions.fail("Should throw IllegalArgumentException for having null startTime but did not");
 	                   
 	        
 	    } catch (IllegalArgumentException iae) {
@@ -141,67 +137,40 @@ public class PolarSchedulerTest {
 	    }
 	    
 	    
-	    //
-		
-	    //Tries to create a course with a null start time
+	    
+		//Tries to create a course with null endTime
 	    try {
 	    	
-	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", , 1220);
-	    	//scheduler.createNewCourse("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
-	    	//Assertions.assertEquals(IllegalArgumentException, null);
-	    	//Assertions.fail("Should throw IllegalArgumentException for missing start time but did not");          
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
-		
-	    //Tries to create a second course and checks to see if both courses were created
-	    try {
-	    	
-	    	//scheduler.createNewCourse(course1);
-	    	scheduler.createNewCourse(course2);
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
+	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", 1120, null);
+	    	Assertions.fail("Should throw IllegalArgumentException for having null endTime but did not");
+	                   
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
 	    
-	    //Tries to create a second course and checks to see if both courses were created
+	    
+	    
+		//Tries to create a course with A 
 	    try {
 	    	
-	    	//scheduler.createNewCourse(course1);
-	    	scheduler.createNewCourse(course2);
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
+	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", 1120, 1220);
+	    	Assertions.fail("Should throw IllegalArgumentException for having non Integer endtime");
+	                   
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
-	    
-	    //Tries to create a second course and checks to see if both courses were created
-	    try {
-	    	
-	    	//scheduler.createNewCourse(course1);
-	    	scheduler.createNewCourse(course2);
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
-	    	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
-	        
-	    } catch (IllegalArgumentException iae) {
-	        // Exception expected, carry on
-	    }
-	    
 	}
 	
-	
-	
-
 	@Test
 	public void testRemoveCourseFromSchedule() {
 		
 		//Add courses to catalogue
     	scheduler.createNewCourse(course1);
-    	scheduler.createNewCourse(course1);
+    	scheduler.createNewCourse(course2);
     	
     	//Add courses to schedule
     	scheduler.addCourseToSchedule("EOS 1020", "123");
@@ -240,10 +209,10 @@ public class PolarSchedulerTest {
 	public void testGetCourseCatalogue() {
     	
 		scheduler.createNewCourse(course1);
-    	scheduler.createNewCourse(course1);	
+    	scheduler.createNewCourse(course2);	
     	
     	String[][] newArray = scheduler.getCourseCatalogue();
-    	String[][] testCatalogue = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}};
+    	String[][] testCatalogue = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}};
 		
     	Assertions.assertArrayEquals(testCatalogue, newArray);
     	
@@ -252,7 +221,7 @@ public class PolarSchedulerTest {
     	scheduler.createNewCourse(course3);	
     	
     	newArray = scheduler.getCourseCatalogue();
-    	String[][] testCatalogue1 = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}, {"CSCI 2101", "Computation", "321", "Torres", "TWH", "1020", "1220"}};
+    	String[][] testCatalogue1 = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}, {"CSCI 2101", "321", "Computation"}};
     	
     	
     	Assertions.assertArrayEquals(testCatalogue1, newArray);
@@ -263,14 +232,14 @@ public class PolarSchedulerTest {
 	public void testGetScheduledCourses() {
 		
 		scheduler.createNewCourse(course1);
-    	scheduler.createNewCourse(course1);	
+    	scheduler.createNewCourse(course2);	
     	
     	scheduler.addCourseToSchedule("EOS 1020", "MTW");
     	scheduler.addCourseToSchedule("CSCI 1101", "TWH");
     	
     	
     	String[][] newArray = scheduler.getScheduledCourses();
-    	String[][] testCatalogue = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}};
+    	String[][] testCatalogue = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}};
 		
     	Assertions.assertArrayEquals(testCatalogue, newArray);
     	
@@ -281,7 +250,7 @@ public class PolarSchedulerTest {
     	
     	newArray = scheduler.getScheduledCourses();
     	
-    	String[][] testCatalogue1 = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}, {"CSCI 2101", "Computation", "321", "Torres", "TWH", "1020", "1220"}};
+    	String[][] testCatalogue1 = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}, {"CSCI 2101", "321", "Computation"}};
     	
     	Assertions.assertArrayEquals(testCatalogue1, newArray);
 		
@@ -292,14 +261,15 @@ public class PolarSchedulerTest {
 		
 		
 		scheduler.createNewCourse(course1);
-    	scheduler.createNewCourse(course1);	
+    	scheduler.createNewCourse(course2);	
     	
     	scheduler.addCourseToSchedule("EOS 1020", "MTW");
     	scheduler.addCourseToSchedule("CSCI 1101", "TWH");
     	
     	
-    	String[][] newArray = scheduler.getScheduledCourses();
-    	String[][] testCatalogue = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}};
+    	String[][] newArray = scheduler.getFullScheduledCourses();
+    	String[][] testCatalogue = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20am-12:20pm"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20am-12:20pm"}};
+    	
 		
     	Assertions.assertArrayEquals(testCatalogue, newArray);
     	
@@ -308,21 +278,16 @@ public class PolarSchedulerTest {
     	scheduler.createNewCourse(course3);	
     	scheduler.addCourseToSchedule("CSCI 2101", "TWH");
     	
-    	newArray = scheduler.getScheduledCourses();
+    	newArray = scheduler.getFullScheduledCourses();
     	
-    	String[][] testCatalogue1 = {{"EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220"}, {"CSCI 1101", "Computer", "321", "Warmer", "TWH", "1020", "1220"}, {"CSCI 2101", "Computation", "321", "Torres", "TWH", "1020", "1220"}};
+    	String[][] testCatalogue1 = {{"Earth", "123", "EOS 1020", "Cooler", "MTW 11:20am-12:120pm"}, {"Computer", "321", "CSCI 1101", "Warmer", "TWH 10:20am-12:20pm"}, {"Computation", "321", "CSCI 2101", "Torres", "TWH 10:20am-12:20pm"}};
     	
-    	Assertions.assertArrayEquals(testCatalogue1, newArray);
-		
-		
-	
-			
+    	Assertions.assertArrayEquals(testCatalogue1, newArray);	
 		
 	}
 	
 	@Test
 	public void testSetScheduleTitle() {
-		
 		
 		try {
 			
@@ -335,16 +300,6 @@ public class PolarSchedulerTest {
 		
 		scheduler.setScheduleTitle("Brenda's Got a Baby");
 		Assertions.assertEquals("Brenda's Got a Baby", scheduler.getScheduleTitle());
-		
-	}
-	
-
-	
-	
-	
-	
-	
-	
-	
+	}	
 
 }

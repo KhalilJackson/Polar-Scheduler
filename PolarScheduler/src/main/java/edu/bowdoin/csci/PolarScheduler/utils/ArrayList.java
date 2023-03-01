@@ -37,7 +37,7 @@ public class ArrayList<E> extends AbstractList<E> {
 	   */
 	@SuppressWarnings("unchecked")
 	public ArrayList(int startingCapacity) {
-		Object[] myArray = new Object[INIT_SIZE];
+		Object[] myArray = new Object[startingCapacity];
 		list = (E[]) myArray;
 		size = 0;
 	}

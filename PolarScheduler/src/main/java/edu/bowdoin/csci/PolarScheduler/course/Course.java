@@ -159,19 +159,19 @@ public class Course {
 		
 	}
 	
-	public void setMeetingDaysAndTime(String s, int w, int e) {
+	public void setMeetingDaysAndTime(String meetingDays, int startTime, int endTime) {
 		
 		//Creates a hash set to get rid of duplicate characters
 		Set<Character> check = new HashSet<Character>();
 		
 		//Add characters to the set
-		for (int i = 0; i < s.length(); i++) {
+		for (int i = 0; i < meetingDays.length(); i++) {
 			
-			check.add(s.charAt(i));
+			check.add(meetingDays.charAt(i));
 		}
 		
 		//If there are duplicates, throw exception
-		if (s.length() != check.size()) {
+		if (meetingDays.length() != check.size()) {
 			throw new IllegalArgumentException();
 		}
 		
@@ -187,36 +187,36 @@ public class Course {
 		
 		//If there is an A, make sure it is the only meeting day
 		//Also ensures start and end times are set to zero
-		if ((s.contains("A"))) {
+		if ((meetingDays.contains("A"))) {
 			
-			if ((s.length() > 1)) {
+			if ((meetingDays.length() > 1)) {
 				throw new IllegalArgumentException();
 			}
 			
-			if ((w != 0) || (e != 0)) {
+			if ((startTime != 0) || (endTime != 0)) {
 				throw new IllegalArgumentException();
 			}
 			
 		}
 		
 		//Makes sure start time falls within acceptable range
-		if ((w < 0) || (w > 2_359)) {
+		if ((startTime < 0) || (startTime > 2359)) {
 			throw new IllegalArgumentException();
 		}
 		
 		//Makes sure end time falls within acceptable range
-		if ((e < 0) || (e > 2_359)) {
+		if ((endTime < 0) || (endTime > 2359)) {
 			throw new IllegalArgumentException();
 		}
 		
 		//Makes sure end time is after start time
-		if (w < e) {
+		if (startTime > endTime) {
 			throw new IllegalArgumentException();
 		}
 		
-		this.meetingDays = s;
-		this.startTime = w;
-		this.endTime = e;			
+		this.meetingDays = meetingDays;
+		this.startTime = startTime;
+		this.endTime = endTime;			
 		
 	}
 	
