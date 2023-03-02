@@ -249,11 +249,11 @@ public class Course {
 			
 			if ((s % 10) == 0) {
 				
-				if ((s % 100) == 0) {
-					code = Float.toString(x).replace('.', ':') + "00" + "AM";
-					return code;
-					
-				}
+//				if (((s % 100)/10) == 0) {
+//					code = Float.toString(x).replace('.', ':') + "0" + "AM";
+//					return code;
+//					
+//				}
 				
 				code = Float.toString(x).replace('.', ':') + "0" + "AM";
 				return code;
@@ -273,11 +273,11 @@ public class Course {
 				
 				if ((s % 10) == 0) {
 					
-					if ((s % 100) == 0) {
-						code = Float.toString(x).replace('.', ':') + "00" + "PM";
-						return code;
-						
-					}
+//					if ((s % 100) == 0) {
+//						code = Float.toString(x).replace('.', ':') + "00" + "PM";
+//						return code;
+//						
+//					}
 					
 					code = Float.toString(x).replace('.', ':') + "0" + "PM";
 					return code;
@@ -295,11 +295,11 @@ public class Course {
 			
 			if ((s % 10) == 0) {
 				
-				if ((s % 100) == 0) {
-					code = Float.toString(x).replace('.', ':') + "00" + "PM";
-					return code;
-					
-				}
+//				if ((s % 100) == 0) {
+//					code = Float.toString(x).replace('.', ':') + "00" + "PM";
+//					return code;
+//					
+//				}
 				
 				code = Float.toString(x).replace('.', ':') + "0" + "PM";
 				return code;

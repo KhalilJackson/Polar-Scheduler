@@ -259,14 +259,15 @@ public class PolarSchedulerTest {
 	@Test
 	public void testGetFullScheduledCourses() {
 		
-		
+		//Add two courses to catalogue
 		scheduler.createNewCourse(course1);
     	scheduler.createNewCourse(course2);	
     	
+    	//Adds two courses to schedule
     	scheduler.addCourseToSchedule("EOS 1020", "123");
     	scheduler.addCourseToSchedule("CSCI 1101", "321");
     	
-    	
+    	//Gets 
     	String[][] newArray = scheduler.getFullScheduledCourses();
     	String[][] testCatalogue = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}};
     	
@@ -284,6 +285,30 @@ public class PolarSchedulerTest {
     	
     	Assertions.assertArrayEquals(testCatalogue1, newArray);	
 		
+    	
+    	//Ensures meeting day A gets a schedule string "Arranged"
+    	Course course4 = new Course("CSCI 2102", "Computational", "321", "Torres", "A", 0, 0);
+    	scheduler.createNewCourse(course4);	
+    	scheduler.addCourseToSchedule("CSCI 2102", "321");
+    	
+    	newArray = scheduler.getFullScheduledCourses();
+    	
+    	String[][] testCatalogue2 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}};
+    	
+    	Assertions.assertArrayEquals(testCatalogue2, newArray);	
+    	
+    	
+    	//Ensures it can take AM times with zeroes after the colon
+    	Course course5 = new Course("CSCI 3102", "Computationality", "321", "Torres", "M", 1000, 1155);
+    	scheduler.createNewCourse(course5);	
+    	scheduler.addCourseToSchedule("CSCI 3102", "321");
+    	
+    	newArray = scheduler.getFullScheduledCourses();
+    	
+    	String[][] testCatalogue3 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}, {"CSCI 3102", "321", "Computationality", "Torres", "M 10:00AM-11:55AM"}};
+    	
+    	Assertions.assertArrayEquals(testCatalogue3, newArray);	
+    	
 	}
 	
 	@Test

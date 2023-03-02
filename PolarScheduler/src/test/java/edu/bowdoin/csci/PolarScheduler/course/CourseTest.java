@@ -82,6 +82,104 @@ public class CourseTest {
         
     }
 	
+	
+	/**
+	* Tests the construction and setting of course names.
+	* 
+	* @return String representation of Course
+	 */
+	@Test
+    public void testSetMeetingDays() {
+		
+		//course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+		
+		try {
+			
+			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+			
+	        course.setMeetingDays("AAA");
+	        Assertions.fail("Cannot have duplicate");
+        
+			
+		} catch (IllegalArgumentException iae) {
+			
+		}
+		
+		try {
+			
+			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+			
+	        course.setMeetingDays("MM");
+	        Assertions.fail("Cannot have duplicate");
+        
+			
+		} catch (IllegalArgumentException iae) {
+			
+		}
+		       
+		try {
+			
+			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+			
+	        course.setMeetingDays("TT");
+	        Assertions.fail("Cannot have duplicate");
+        
+			
+		} catch (IllegalArgumentException iae) {
+			
+		}
+		
+		try {
+			
+			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+			
+	        course.setMeetingDays("WW");
+	        Assertions.fail("Cannot have duplicate");
+        
+			
+		} catch (IllegalArgumentException iae) {
+			
+		}
+		
+		try {
+			
+			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+			
+	        course.setMeetingDays("HH");
+	        Assertions.fail("Cannot have duplicate");
+        
+			
+		} catch (IllegalArgumentException iae) {
+			
+		}
+	        
+		try {
+			
+			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+			
+	        course.setMeetingDays("FF");
+	        Assertions.fail("Cannot have duplicate");
+        
+			
+		} catch (IllegalArgumentException iae) {
+			
+		}
+		
+		try {
+			
+			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
+			
+	        course.setMeetingDays("Z");
+	        Assertions.fail("Cannot have duplicate");
+        
+			
+		} catch (IllegalArgumentException iae) {
+			
+		}
+        
+    }
+	
+	
 	/**
 	* Returns a comma separated value String of all Course fields.
 	* 
@@ -256,7 +354,34 @@ public class CourseTest {
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
-	    }			
+	    }	
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("k", 1000, 1200);
+	    	Assertions.fail("Should throw an IllegalArgumentException for unallowed weekday but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("@", 1000, 1200);
+	    	Assertions.fail("Should throw an IllegalArgumentException for unallowed weekday but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("2", 1000, 1200);
+	    	Assertions.fail("Should throw an IllegalArgumentException for unallowed weekday but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
 	    
 	    
 	    try {
@@ -268,6 +393,50 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("TT", 1000, 11000);
+	    	Assertions.fail("Should throw an IllegalArgumentException for duplicate values but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("WW", 1000, 11000);
+	    	Assertions.fail("Should throw an IllegalArgumentException for duplicate values but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("HH", 1000, 11000);
+	    	Assertions.fail("Should throw an IllegalArgumentException for duplicate values but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("FF", 1000, 11000);
+	    	Assertions.fail("Should throw an IllegalArgumentException for duplicate values but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
+	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("AA", 1000, 11000);
+	    	Assertions.fail("Should throw an IllegalArgumentException for duplicate values but did not");      
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
 	    
 	    try {
 
@@ -279,12 +448,10 @@ public class CourseTest {
 	    }	
 		
 		
-	    
-	    
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 4000, 1);
-	        Assertions.fail("Star time too big");           
+	        Assertions.fail("Start time too big");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
@@ -346,23 +513,6 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-		
 		
 	    try {
 
@@ -394,7 +544,7 @@ public class CourseTest {
 	    
 	    try {
 
-	    	course.setMeetingDaysAndTime("A", 4000, 1);
+	    	course.setMeetingDaysAndTime("M", 4000, 1);
 	        Assertions.fail("Star time too big");           
 	        
 	    } catch (IllegalArgumentException iae) {
@@ -403,7 +553,7 @@ public class CourseTest {
 	    
 	    try {
 
-	    	course.setMeetingDaysAndTime("A", -10, 1);
+	    	course.setMeetingDaysAndTime("M", -10, 1);
 	        Assertions.fail("Start time to small");           
 	        
 	    } catch (IllegalArgumentException iae) {
@@ -413,7 +563,7 @@ public class CourseTest {
 	    
 	    try {
 
-	    	course.setMeetingDaysAndTime("A", 1, 4000);
+	    	course.setMeetingDaysAndTime("M", 1, 4000);
 	        Assertions.fail("Endtime to BIG");           
 	        
 	    } catch (IllegalArgumentException iae) {
@@ -422,13 +572,21 @@ public class CourseTest {
 	    
 	    try {
 
-	    	course.setMeetingDaysAndTime("A", 1000, -1000);
+	    	course.setMeetingDaysAndTime("M", 1000, -1000);
 	        Assertions.fail("Endtime to SMALL");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }		
 	    
+	    try {
+
+	    	course.setMeetingDaysAndTime("M", 1200, 1000);
+	        Assertions.fail("Endtime to SMALL");           
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	
 	    
 	    try {
 
