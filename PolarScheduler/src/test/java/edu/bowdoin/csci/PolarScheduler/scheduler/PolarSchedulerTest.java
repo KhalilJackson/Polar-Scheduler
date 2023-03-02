@@ -231,11 +231,12 @@ public class PolarSchedulerTest {
 	@Test
 	public void testGetScheduledCourses() {
 		
+	
 		scheduler.createNewCourse(course1);
-    	scheduler.createNewCourse(course2);	
+    	scheduler.createNewCourse(course2);
     	
-    	scheduler.addCourseToSchedule("EOS 1020", "MTW");
-    	scheduler.addCourseToSchedule("CSCI 1101", "TWH");
+    	scheduler.addCourseToSchedule("EOS 1020", "123");
+    	scheduler.addCourseToSchedule("CSCI 1101", "321");
     	
     	
     	String[][] newArray = scheduler.getScheduledCourses();
@@ -243,10 +244,9 @@ public class PolarSchedulerTest {
 		
     	Assertions.assertArrayEquals(testCatalogue, newArray);
     	
-    	
     	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
     	scheduler.createNewCourse(course3);	
-    	scheduler.addCourseToSchedule("CSCI 2101", "TWH");
+    	scheduler.addCourseToSchedule("CSCI 2101", "321");
     	
     	newArray = scheduler.getScheduledCourses();
     	
@@ -263,12 +263,12 @@ public class PolarSchedulerTest {
 		scheduler.createNewCourse(course1);
     	scheduler.createNewCourse(course2);	
     	
-    	scheduler.addCourseToSchedule("EOS 1020", "MTW");
-    	scheduler.addCourseToSchedule("CSCI 1101", "TWH");
+    	scheduler.addCourseToSchedule("EOS 1020", "123");
+    	scheduler.addCourseToSchedule("CSCI 1101", "321");
     	
     	
     	String[][] newArray = scheduler.getFullScheduledCourses();
-    	String[][] testCatalogue = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20am-12:20pm"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20am-12:20pm"}};
+    	String[][] testCatalogue = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}};
     	
 		
     	Assertions.assertArrayEquals(testCatalogue, newArray);
@@ -276,11 +276,11 @@ public class PolarSchedulerTest {
     	
     	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
     	scheduler.createNewCourse(course3);	
-    	scheduler.addCourseToSchedule("CSCI 2101", "TWH");
+    	scheduler.addCourseToSchedule("CSCI 2101", "321");
     	
     	newArray = scheduler.getFullScheduledCourses();
     	
-    	String[][] testCatalogue1 = {{"Earth", "123", "EOS 1020", "Cooler", "MTW 11:20am-12:120pm"}, {"Computer", "321", "CSCI 1101", "Warmer", "TWH 10:20am-12:20pm"}, {"Computation", "321", "CSCI 2101", "Torres", "TWH 10:20am-12:20pm"}};
+    	String[][] testCatalogue1 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}};
     	
     	Assertions.assertArrayEquals(testCatalogue1, newArray);	
 		

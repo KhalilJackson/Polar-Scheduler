@@ -240,11 +240,25 @@ public class Course {
 		
 		//Cast s to use decimal point
 		float x = s;
+		System.out.println(x);
 		
 		if (s < 1200) {
 			
 			//Places decimal point in between four digits
 			x = x/100;
+			
+			if ((s % 10) == 0) {
+				
+				if ((s % 100) == 0) {
+					code = Float.toString(x).replace('.', ':') + "00" + "AM";
+					return code;
+					
+				}
+				
+				code = Float.toString(x).replace('.', ':') + "0" + "AM";
+				return code;
+			}
+			
 			
 			//Turn float into string where decimal is replaced with colon
 			//and has AM at the end
@@ -253,8 +267,43 @@ public class Course {
 			
 		} else {
 			
+			if (s > 1300) {
+				
+				x = (x - 1200)/100;
+				
+				if ((s % 10) == 0) {
+					
+					if ((s % 100) == 0) {
+						code = Float.toString(x).replace('.', ':') + "00" + "PM";
+						return code;
+						
+					}
+					
+					code = Float.toString(x).replace('.', ':') + "0" + "PM";
+					return code;
+				}
+				
+				//Turns into a formatted string with PM
+				code = Float.toString(x).replace('.', ':') + "PM";		
+				return code; 
+				
+			}
+			
 			//Subtracts by 1200 so we can do same math as before
-			x = (x - 1200)/100;
+			//x = (x - 1200)/100;
+			x = x/100;
+			
+			if ((s % 10) == 0) {
+				
+				if ((s % 100) == 0) {
+					code = Float.toString(x).replace('.', ':') + "00" + "PM";
+					return code;
+					
+				}
+				
+				code = Float.toString(x).replace('.', ':') + "0" + "PM";
+				return code;
+			}
 			
 			//Turns into a formatted string with PM
 			code = Float.toString(x).replace('.', ':') + "PM";		

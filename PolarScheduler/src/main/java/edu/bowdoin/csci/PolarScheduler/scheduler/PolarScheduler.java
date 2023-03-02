@@ -26,7 +26,8 @@ public class PolarScheduler {
 		for (Course course: catalogue) {
 			
 			//Return course if in the catalogue
-			if ((course.getName() == name) && (course.getSection() == section)) {
+			if ((name.equals(course.getName())) && (section.equals(course.getSection()))) {
+				//System.out.println(course);
 				return course;
 				
 			}
@@ -39,9 +40,11 @@ public class PolarScheduler {
 	public boolean addCourseToSchedule(String name, String section) {
 		
 		Course addCourse = getCourseFromCatalogue(name, section);
+		//System.out.println(addCourse);
 		
 		//Return false if course not found
 		if (addCourse == null) {
+			//System.out.println(false);
 			return false;
 		} else {
 			
@@ -120,6 +123,7 @@ public class PolarScheduler {
 		} else {
 			
 			catalogue.add(course);
+			System.out.println(catalogue);
 			return true;
 		}
 	}
