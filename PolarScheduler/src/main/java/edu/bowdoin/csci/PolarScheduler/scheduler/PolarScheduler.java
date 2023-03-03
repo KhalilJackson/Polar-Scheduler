@@ -11,15 +11,22 @@ public class PolarScheduler {
 	
 	private ArrayList<Course> schedule;
 	
-	
+	/**
+	* Constructor.
+	* 
+	 */
 	public PolarScheduler() {
 		
 		this.title = "My Schedule";
 		this.catalogue = new ArrayList<Course>();
-		this.schedule = new ArrayList<Course>();
-		
+		this.schedule = new ArrayList<Course>();	
 	}
 	
+	/**
+	* Gets course from catalogue by iterating through it and matching name and section.
+	* 
+	* @return course
+	 */
 	public Course getCourseFromCatalogue(String name, String section) {
 		
 		//Iterate through course catalogue
@@ -37,6 +44,11 @@ public class PolarScheduler {
 		return null;
 	}
 	
+	/**
+	* Adds course to schedule is it can be and is not a duplicate.
+	* 
+	* @return true if course was added, false if not
+	 */
 	public boolean addCourseToSchedule(String name, String section) {
 		
 		Course addCourse = getCourseFromCatalogue(name, section);
@@ -60,10 +72,14 @@ public class PolarScheduler {
 			//Otherwise, add course and return true
 			schedule.add(addCourse);
 			return true;
-			
 		}
 	}
 	
+	/**
+	* Adds course to catalogue by checking its parameters for validity.
+	* 
+	* @void
+	 */
 	public void createNewCourse(String name, String title, String section, String instructorId, String meetingDays, Integer startTime, Integer endTime) {
 		
 		if (startTime == null) {
@@ -113,6 +129,11 @@ public class PolarScheduler {
 		
 	}
 	
+	/**
+	* Adds course to catalogue using Course object.
+	* 
+	* @return true if course added, false if not
+	 */
 	public boolean createNewCourse(Course course) {
 		
 		if (catalogue.contains(course)) {
@@ -126,7 +147,11 @@ public class PolarScheduler {
 		}
 	}
 	
-	
+	/**
+	* Removes course from schedule.
+	* 
+	* @return true if removed, false if not
+	 */
 	public boolean removeCourseFromSchedule(String a, String b) {
 		
 		//Iterate through schedule
@@ -144,14 +169,22 @@ public class PolarScheduler {
 		return false;
 	}
 	
-	
+	/**
+	* Resets scehdule.
+	* 
+	* @void
+	 */
 	public void resetSchedule() {
 		
 		//Sets schedule to a new ArrayList to reset
 		schedule = new ArrayList<Course>();
-		
 	}
 	
+	/**
+	* Gets course catalogue by iterating through catalogue and formating strings.
+	* 
+	* @return 2d array of course catalogue
+	 */
 	public String[][] getCourseCatalogue() {
 		
 		//Initialize 2d array to the size of catalogue
@@ -173,7 +206,11 @@ public class PolarScheduler {
 		return catalogueArray;
 	}
 	
-	
+	/**
+	* Gets course schedule by iterating through schedule and formating strings.
+	* 
+	* @return 2d array of course schedule
+	 */
 	public String[][] getScheduledCourses() {
 		
 		//Initialize 2d array to the size of schedule
@@ -195,7 +232,11 @@ public class PolarScheduler {
 		return scheduleArray;
 	}
 	
-	
+	/**
+	* Gets full course schedule by iterating through schedule and formating strings.
+	* 
+	* @return 2d array of full course schedule
+	 */
 	public String[][] getFullScheduledCourses() {
 		
 		
@@ -220,7 +261,11 @@ public class PolarScheduler {
 		return scheduleArray;
 	}
 	
-	
+	/**
+	* Sets schedule title solong as it is not null.
+	* 
+	* @void
+	 */
 	public void setScheduleTitle(String title) {
 		
 		if (title == null) {
@@ -231,10 +276,13 @@ public class PolarScheduler {
 		}
 	}
 	
-	
+	/**
+	* Gets schedule title.
+	* 
+	* @return title as a string
+	 */
 	public String getScheduleTitle() {
 		
 		return title;
 	}
-
 }

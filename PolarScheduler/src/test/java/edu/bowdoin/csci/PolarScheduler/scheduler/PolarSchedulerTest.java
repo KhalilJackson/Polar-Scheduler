@@ -24,56 +24,61 @@ public class PolarSchedulerTest {
 		
 	}
 	
+	/**
+	* Tests constructor.
+	* 
+	* @void
+	 */
 	@Test
 	public void testPolarScheduler() {
 		
 		
 		//Ensures schedule is set to proper title
-		Assertions.assertEquals("My Schedule", scheduler.getScheduleTitle());
-				
-			
+		Assertions.assertEquals("My Schedule", scheduler.getScheduleTitle());		
 	}
 	
-	
+	/**
+	* Tests createNewCourse with Course parameter.
+	* 
+	* @void
+	 */
 	@Test
 	public void testCreateNewCourse() {
 		
 		
-		//Tries to create the same course twice, which should lead to an error
-	    	
+		//Tries to create the same course twice, which should lead to false
     	scheduler.createNewCourse(course1);
     	Assertions.assertEquals(false, scheduler.createNewCourse(course1));
     	
-    	
-    	//scheduler.createNewCourse(course1);
-        //Assertions.fail("Trying to create a duplicate course should throw an UllegalArgumentException but did not");           
-        
-		
-	    
-	    //Ensures courses were added
-    	//scheduler.createNewCourse(course1);
-    	//scheduler.createNewCourse(course2);
-    	
+    	//Tries to add second course, which should be true
     	Assertions.assertEquals(true, scheduler.createNewCourse(course2));
-    	
 	}
 	
+	/**
+	* Tests getCourseFromCatalogue.
+	* 
+	* @void
+	 */
 	@Test
 	public void testGetCourseFromCatalogue() {
 		
+		//Add courses to catalogue
     	scheduler.createNewCourse(course1);
     	scheduler.createNewCourse(course2);
 		
-	    //Tries to get course1 and course2
+	    //Tries to get course1 and course2, should return them respectively
     	Assertions.assertEquals(course1, scheduler.getCourseFromCatalogue("EOS 1020", "123"));
     	Assertions.assertEquals(course2, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));           
 	        
 	    //Ensures a course that is not in the catalogue returns null
     	Assertions.assertEquals(null, scheduler.getCourseFromCatalogue("ABDC 1234", "0011"));           
-	        
 	}
 	
-	
+	/**
+	* Tests addCourseToSchedule.
+	* 
+	* @void
+	 */
 	@Test
 	public void testAddCourseToSchedule() {
 		
@@ -98,12 +103,14 @@ public class PolarSchedulerTest {
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
-	    }
-		
-		
+	    }		
 	}
 	
-	
+	/**
+	* Tests createNewCourse with all Course class parameters.
+	* 
+	* @void
+	 */
 	@Test
 	public void testCreateNewCourse2() {
 		
@@ -165,6 +172,11 @@ public class PolarSchedulerTest {
 	    }
 	}
 	
+	/**
+	* Tests removeCourseFromSchedule.
+	* 
+	* @void
+	 */
 	@Test
 	public void testRemoveCourseFromSchedule() {
 		
@@ -184,8 +196,11 @@ public class PolarSchedulerTest {
     	Assertions.assertEquals(false, scheduler.removeCourseFromSchedule("ABCD 1234", "0000"));
 	}
 	
-	
-	
+	/**
+	* Tests resetSchedule.
+	* 
+	* @void
+	 */
 	@Test
 	public void testResetSchedule() {
 		
@@ -202,60 +217,81 @@ public class PolarSchedulerTest {
     	
     	//Should receive false if trying to remove a course from a reset schedule
     	Assertions.assertEquals(false, scheduler.removeCourseFromSchedule("EOS 1020", "123"));		
-		
 	}
 	
+	/**
+	* Tests getCourseCatalogue.
+	* 
+	* @void
+	 */
 	@Test
 	public void testGetCourseCatalogue() {
     	
+		//Add course to catalogue
 		scheduler.createNewCourse(course1);
     	scheduler.createNewCourse(course2);	
     	
+    	//Get catalogue and create 2d array of expected output
     	String[][] newArray = scheduler.getCourseCatalogue();
     	String[][] testCatalogue = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}};
 		
+    	//Assert they are they same
     	Assertions.assertArrayEquals(testCatalogue, newArray);
     	
-    	
+    	//Add a third course to the catalogue
     	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
     	scheduler.createNewCourse(course3);	
     	
+    	//Get catalogue and create 2d array of expected output
     	newArray = scheduler.getCourseCatalogue();
     	String[][] testCatalogue1 = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}, {"CSCI 2101", "321", "Computation"}};
     	
-    	
+    	//Assert they are equal
     	Assertions.assertArrayEquals(testCatalogue1, newArray);
-		
 	}
 	
+	/**
+	* Tests getScheduledCourses.
+	* 
+	* @void
+	 */
 	@Test
 	public void testGetScheduledCourses() {
 		
-	
+		//Add courses to catalogue
 		scheduler.createNewCourse(course1);
     	scheduler.createNewCourse(course2);
     	
+    	//Add courses to schedule
     	scheduler.addCourseToSchedule("EOS 1020", "123");
     	scheduler.addCourseToSchedule("CSCI 1101", "321");
     	
-    	
+    	//Get schedule and create 2d array of expected output
     	String[][] newArray = scheduler.getScheduledCourses();
     	String[][] testCatalogue = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}};
 		
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue, newArray);
     	
+    	//Add third course
     	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
     	scheduler.createNewCourse(course3);	
     	scheduler.addCourseToSchedule("CSCI 2101", "321");
     	
+    	//Get catalogue and create 2d array of expected output
     	newArray = scheduler.getScheduledCourses();
-    	
     	String[][] testCatalogue1 = {{"EOS 1020", "123", "Earth"}, {"CSCI 1101", "321", "Computer"}, {"CSCI 2101", "321", "Computation"}};
     	
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue1, newArray);
 		
 	}
 	
+	/**
+	* Tests getFullScheduledCourses.
+	* 
+	* @void
+	 */
 	@Test
 	public void testGetFullScheduledCourses() {
 		
@@ -267,79 +303,87 @@ public class PolarSchedulerTest {
     	scheduler.addCourseToSchedule("EOS 1020", "123");
     	scheduler.addCourseToSchedule("CSCI 1101", "321");
     	
-    	//Gets 
+    	//Get catalogue and create 2d array of expected output
     	String[][] newArray = scheduler.getFullScheduledCourses();
     	String[][] testCatalogue = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}};
     	
-		
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue, newArray);
     	
-    	
+    	//Add third course
     	Course course3 = new Course("CSCI 2101", "Computation", "321", "Torres", "TWH", 1020, 1220);
     	scheduler.createNewCourse(course3);	
     	scheduler.addCourseToSchedule("CSCI 2101", "321");
     	
+    	//Get catalogue and create 2d array of expected output
     	newArray = scheduler.getFullScheduledCourses();
-    	
     	String[][] testCatalogue1 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}};
     	
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue1, newArray);	
 		
     	
-    	//Ensures meeting day A gets a schedule string "Arranged"
+    	//Add fourth course
     	Course course4 = new Course("CSCI 2102", "Computational", "321", "Torres", "A", 0, 0);
     	scheduler.createNewCourse(course4);	
     	scheduler.addCourseToSchedule("CSCI 2102", "321");
     	
+    	//Get catalogue and create 2d array of expected output
     	newArray = scheduler.getFullScheduledCourses();
-    	
     	String[][] testCatalogue2 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}};
     	
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue2, newArray);	
     	
     	
-    	//Ensures it can take AM times with zeroes after the colon
+    	//Get fifth course
     	Course course5 = new Course("CSCI 3102", "Computationality", "321", "Torres", "M", 1000, 1155);
     	scheduler.createNewCourse(course5);	
     	scheduler.addCourseToSchedule("CSCI 3102", "321");
     	
+    	//Get catalogue and create 2d array of expected output
     	newArray = scheduler.getFullScheduledCourses();
-    	
     	String[][] testCatalogue3 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}, {"CSCI 3102", "321", "Computationality", "Torres", "M 10:00AM-11:55AM"}};
     	
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue3, newArray);	
+   
     	
-    	
-    	
-    	
-    	//Ensures it can take PM times ending in a zero and not with a zero
+    	//Add sixth course
     	Course course6 = new Course("CSCI 4102", "Comp", "321", "Torres", "M", 1400, 1555);
     	scheduler.createNewCourse(course6);	
     	scheduler.addCourseToSchedule("CSCI 4102", "321");
     	
+    	//Get catalogue and create 2d array of expected output
     	newArray = scheduler.getFullScheduledCourses();
-    	
     	String[][] testCatalogue4 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}, {"CSCI 3102", "321", "Computationality", "Torres", "M 10:00AM-11:55AM"}, {"CSCI 4102", "321", "Comp", "Torres", "M 2:00PM-3:55PM"}};
     	
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue4, newArray);	
     	
     	
-    	//Ensures it can take PM times that do not end in zero
+    	//Add seventh course
     	Course course7 = new Course("CSCI 5102", "Computate", "321", "Torres", "M", 1205, 1225);
     	scheduler.createNewCourse(course7);	
     	scheduler.addCourseToSchedule("CSCI 5102", "321");
     	
+    	//Get catalogue and create 2d array of expected output
     	newArray = scheduler.getFullScheduledCourses();
-    	
     	String[][] testCatalogue5 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}, {"CSCI 3102", "321", "Computationality", "Torres", "M 10:00AM-11:55AM"}, {"CSCI 4102", "321", "Comp", "Torres", "M 2:00PM-3:55PM"}, {"CSCI 5102", "321", "Computate", "Torres", "M 12:05PM-12:25PM"}};
     	
+    	//Assert they are the same
     	Assertions.assertArrayEquals(testCatalogue5, newArray);
-    	
 	}
 	
+	/**
+	* Tests setScheduleTitle.
+	* 
+	* @void
+	 */
 	@Test
 	public void testSetScheduleTitle() {
 		
+		//Cannot have null title
 		try {
 			
 			scheduler.setScheduleTitle(null);
@@ -349,8 +393,8 @@ public class PolarSchedulerTest {
 			
 		}
 		
+		//Assert that set title is what is returned when calling getScheduleTitle
 		scheduler.setScheduleTitle("Brenda's Got a Baby");
 		Assertions.assertEquals("Brenda's Got a Baby", scheduler.getScheduleTitle());
 	}	
-
 }
