@@ -178,6 +178,16 @@ public class Course {
 			throw new IllegalArgumentException("Invalid meeting days and times.");
 		}
 		
+		//If the last two digits of startTime are greater than 59, throw exception
+		if ((startTime % 100) > 59) {
+			throw new IllegalArgumentException("Invalid meeting days and times.");
+		}
+		
+		//If the last two digits of endTime are greater than 59, throw exception
+		if ((endTime % 100) > 59) {
+			throw new IllegalArgumentException("Invalid meeting days and times.");
+		}
+		
 		//If days are not of acceptable characters, throw exception		
 		for (char day: check) {
 			
