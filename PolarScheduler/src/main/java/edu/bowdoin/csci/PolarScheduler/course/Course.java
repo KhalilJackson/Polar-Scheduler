@@ -46,8 +46,13 @@ public class Course {
 	
 	public void setSection(String section) {
 		
+		//Ensure section is not null
+		if ((section == "null") || (section == null)) {
+			throw new IllegalArgumentException("Invalid section.");
+		}
+		
 		//Ensures section is between 1-4 characters
-		if ((section.length() < 1) || (section.length() > 4) || (section == null)) {
+		if ((section.length() < 1) || (section.length() > 4)) {
 			throw new IllegalArgumentException("Invalid section.");
 		} else {
 			this.section = section;
