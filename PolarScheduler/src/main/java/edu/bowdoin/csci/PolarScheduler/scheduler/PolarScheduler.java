@@ -143,13 +143,13 @@ public class PolarScheduler {
 		
 		if (newStartTime == null) {
 			
-			throw new IllegalArgumentException("Missing start time");
+			throw new IllegalArgumentException("Missing start time for non-Arranged course.");
 			
 		}
 		
 		if (newEndTime == null) {
 			
-			throw new IllegalArgumentException("Missing end time");
+			throw new IllegalArgumentException("Missing end time for non-Arranged course.");
 			
 		}
 		
