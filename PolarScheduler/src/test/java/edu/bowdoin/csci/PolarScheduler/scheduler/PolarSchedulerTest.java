@@ -309,6 +309,32 @@ public class PolarSchedulerTest {
     	
     	Assertions.assertArrayEquals(testCatalogue3, newArray);	
     	
+    	
+    	
+    	
+    	//Ensures it can take PM times ending in a zero and not with a zero
+    	Course course6 = new Course("CSCI 4102", "Comp", "321", "Torres", "M", 1400, 1555);
+    	scheduler.createNewCourse(course6);	
+    	scheduler.addCourseToSchedule("CSCI 4102", "321");
+    	
+    	newArray = scheduler.getFullScheduledCourses();
+    	
+    	String[][] testCatalogue4 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}, {"CSCI 3102", "321", "Computationality", "Torres", "M 10:00AM-11:55AM"}, {"CSCI 4102", "321", "Comp", "Torres", "M 2:00PM-3:55PM"}};
+    	
+    	Assertions.assertArrayEquals(testCatalogue4, newArray);	
+    	
+    	
+    	//Ensures it can take PM times that do not end in zero
+    	Course course7 = new Course("CSCI 5102", "Computate", "321", "Torres", "M", 1205, 1225);
+    	scheduler.createNewCourse(course7);	
+    	scheduler.addCourseToSchedule("CSCI 5102", "321");
+    	
+    	newArray = scheduler.getFullScheduledCourses();
+    	
+    	String[][] testCatalogue5 = {{"EOS 1020", "123", "Earth", "Cooler", "MTW 11:20AM-12:20PM"}, {"CSCI 1101", "321", "Computer", "Warmer", "TWH 10:20AM-12:20PM"}, {"CSCI 2101", "321", "Computation", "Torres", "TWH 10:20AM-12:20PM"}, {"CSCI 2102", "321", "Computational", "Torres", "Arranged"}, {"CSCI 3102", "321", "Computationality", "Torres", "M 10:00AM-11:55AM"}, {"CSCI 4102", "321", "Comp", "Torres", "M 2:00PM-3:55PM"}, {"CSCI 5102", "321", "Computate", "Torres", "M 12:05PM-12:25PM"}};
+    	
+    	Assertions.assertArrayEquals(testCatalogue5, newArray);
+    	
 	}
 	
 	@Test

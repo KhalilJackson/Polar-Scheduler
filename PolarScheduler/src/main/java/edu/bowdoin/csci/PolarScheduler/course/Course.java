@@ -123,40 +123,43 @@ public class Course {
 	
 	public void setMeetingDays(String s) {
 		
-		//Creates a hash set to get rid of duplicate characters
-				Set<Character> check = new HashSet<Character>();
-				
-				//Add characters to the set
-				for (int i = 0; i < s.length(); i++) {
-					
-					check.add(s.charAt(i));
-				}
-				
-				//If there are duplicates, throw exception
-				if (s.length() != check.size()) {
-					throw new IllegalArgumentException();
-				}
-				
-				//If days are not of acceptable characters, throw exception		
-				for (char day: check) {
-					
-					if ((day == 'M') || (day == 'T') || (day == 'W') || (day == 'H') || (day == 'F') || (day == 'A')) {
-						
-					} else {
-						throw new IllegalArgumentException();
-					}
-				}
-				
-				//If there is an A, make sure it is the only meeting day
-				//Also ensures start and end times are set to zero
-				if ((s.contains("A"))) {
-					
-					if ((s.length() > 1)) {
-						throw new IllegalArgumentException();
-					}
-					
-				}
 		
+		//Creates a hash set to get rid of duplicate characters
+		Set<Character> check = new HashSet<Character>();
+		
+		//Add characters to the set
+		for (int i = 0; i < s.length(); i++) {
+			
+			check.add(s.charAt(i));
+		}
+						
+		//If there are duplicates, throw exception
+		if (s.length() != check.size()) {
+			throw new IllegalArgumentException();
+		}
+		
+		//If days are not of acceptable characters, throw exception		
+		for (char day: check) {
+			
+			if ((day == 'M') || (day == 'T') || (day == 'W') || (day == 'H') || (day == 'F') || (day == 'A')) {
+				
+			} else {
+				throw new IllegalArgumentException();
+			}
+		}
+		
+		//If there is an A, make sure it is the only meeting day
+		//Also ensures start and end times are set to zero
+		if ((s.contains("A"))) {
+			
+			if ((s.length() > 1)) {
+				//System.out.println("Found more than one");
+				throw new IllegalArgumentException("Can't have more than a single A if A is used");
+			}
+			
+		}
+		
+		meetingDays = s;
 	}
 	
 	public void setMeetingDaysAndTime(String meetingDays, int startTime, int endTime) {
@@ -240,7 +243,6 @@ public class Course {
 		
 		//Cast s to use decimal point
 		float x = s;
-		System.out.println(x);
 		
 		if (s < 1200) {
 			
@@ -248,13 +250,7 @@ public class Course {
 			x = x/100;
 			
 			if ((s % 10) == 0) {
-				
-//				if (((s % 100)/10) == 0) {
-//					code = Float.toString(x).replace('.', ':') + "0" + "AM";
-//					return code;
-//					
-//				}
-				
+								
 				code = Float.toString(x).replace('.', ':') + "0" + "AM";
 				return code;
 			}
@@ -273,12 +269,6 @@ public class Course {
 				
 				if ((s % 10) == 0) {
 					
-//					if ((s % 100) == 0) {
-//						code = Float.toString(x).replace('.', ':') + "00" + "PM";
-//						return code;
-//						
-//					}
-					
 					code = Float.toString(x).replace('.', ':') + "0" + "PM";
 					return code;
 				}
@@ -295,18 +285,13 @@ public class Course {
 			
 			if ((s % 10) == 0) {
 				
-//				if ((s % 100) == 0) {
-//					code = Float.toString(x).replace('.', ':') + "00" + "PM";
-//					return code;
-//					
-//				}
-				
 				code = Float.toString(x).replace('.', ':') + "0" + "PM";
 				return code;
 			}
 			
 			//Turns into a formatted string with PM
-			code = Float.toString(x).replace('.', ':') + "PM";		
+			code = Float.toString(x).replace('.', ':') + "PM";
+			//System.out.println(code);
 			return code; 
 			
 		}

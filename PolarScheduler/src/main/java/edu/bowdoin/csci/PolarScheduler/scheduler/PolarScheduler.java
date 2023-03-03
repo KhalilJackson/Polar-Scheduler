@@ -27,7 +27,7 @@ public class PolarScheduler {
 			
 			//Return course if in the catalogue
 			if ((name.equals(course.getName())) && (section.equals(course.getSection()))) {
-				//System.out.println(course);
+
 				return course;
 				
 			}
@@ -40,11 +40,10 @@ public class PolarScheduler {
 	public boolean addCourseToSchedule(String name, String section) {
 		
 		Course addCourse = getCourseFromCatalogue(name, section);
-		//System.out.println(addCourse);
 		
 		//Return false if course not found
 		if (addCourse == null) {
-			//System.out.println(false);
+
 			return false;
 		} else {
 			
@@ -53,7 +52,7 @@ public class PolarScheduler {
 				
 				//Throw exception if course already found in schedule
 				if (course.getName() == addCourse.getName()) {
-					//System.out.println("You are already enrolled in " + course.getName());
+
 					throw new IllegalArgumentException("You are already enrolled in " + course.getName());
 				}
 			}
@@ -123,7 +122,6 @@ public class PolarScheduler {
 		} else {
 			
 			catalogue.add(course);
-			System.out.println(catalogue);
 			return true;
 		}
 	}
@@ -185,9 +183,7 @@ public class PolarScheduler {
 			
 		//Iterate through schedule
 		for (Course course: schedule) {
-			
-			System.out.println(course + "Hello");  
-			
+			  
 			//Add name, section, and title to correct positions
 			scheduleArray[counter][0] = course.getName();
 			scheduleArray[counter][1] = course.getSection();

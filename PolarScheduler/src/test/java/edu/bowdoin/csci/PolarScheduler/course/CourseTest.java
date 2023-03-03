@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.bowdoin.csci.PolarScheduler.scheduler.PolarScheduler;
 import edu.bowdoin.csci.PolarScheduler.utils.ArrayList;
 
 public class CourseTest {
@@ -92,7 +93,7 @@ public class CourseTest {
     public void testSetMeetingDays() {
 		
 		//course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
-		
+//		
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -178,6 +179,32 @@ public class CourseTest {
 		}
         
     }
+	
+	@Test
+	public void testEquals() {
+		
+		Course test = new Course();
+		PolarScheduler tester = new PolarScheduler();
+		
+		Assertions.assertEquals(false, test.equals(null));
+		
+		Assertions.assertEquals(false, test.equals(tester));
+				
+	}
+	
+	@Test
+	public void testToString() {
+		
+		
+		course = new Course("EOS 1020", "Earth", "123", "Cooler", "A");
+				
+		Assertions.assertEquals("EOS 1020,Earth,123,Cooler,A", course.toString());
+		
+		
+		course = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1000, 1200);
+		Assertions.assertEquals("EOS 1020,Earth,123,Cooler,MTW,1000,1200", course.toString());
+				
+	}
 	
 	
 	/**
@@ -617,6 +644,31 @@ public class CourseTest {
 	    
 	    
 	  
+	}
+	
+	@Test
+	public void testGetMeetingDays() {
+		
+		course = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1000, 1400);
+		
+		Assertions.assertEquals("MTW", course.getMeetingDays());
+	}
+	
+	@Test
+	public void testGetStartTime() {
+		
+		course = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1000, 1400);
+		
+		Assertions.assertEquals(1000, course.getStartTime());
+		
+	}
+	
+	@Test
+	public void testGetEndTime() {
+		
+		course = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1000, 1400);
+		
+		Assertions.assertEquals(1400, course.getEndTime());
 	}
 	
 	
