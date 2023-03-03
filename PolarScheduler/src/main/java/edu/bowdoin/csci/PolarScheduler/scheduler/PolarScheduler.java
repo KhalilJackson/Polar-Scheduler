@@ -125,8 +125,65 @@ public class PolarScheduler {
 			
 			createNewCourse(newCourse);
 		}
-				
+	}
+	
+	/**
+	* Adds course to catalogue by checking its parameters for validity; this handles start time and end time being passed in as strings.
+	* 
+	* @void
+	 */
+	public void createNewCourse(String name, String title, String section, String instructorId, String meetingDays, String startTime, String endTime) {
 		
+		int transition1 = Integer.parseInt(startTime);
+		Integer newStartTime = Integer.valueOf(transition1);
+		
+		int transition2 = Integer.parseInt(endTime);
+		Integer newEndTime = Integer.valueOf(transition2);
+		
+		
+		if (newStartTime == null) {
+			
+			throw new IllegalArgumentException("Missing start time for non-Arranged course");
+			
+		}
+		
+		if (newEndTime == null) {
+			
+			throw new IllegalArgumentException("Missing end time for non-Arranged course");
+			
+		}
+		
+		if (((newStartTime < 0000) || (newStartTime >2359)) || ((newEndTime < 0) || newEndTime > 2359)) {
+			
+			throw new IllegalArgumentException("Invalid start time or end time");
+		}
+		
+		if (meetingDays.contains("A")) {
+			
+			if (meetingDays.length() > 1) {
+				
+				throw new IllegalArgumentException("Meeting day A should not be accompanied with other days");
+				
+			}
+			
+			if ((newStartTime != 0) || (newEndTime != 0)) {
+				
+				throw new IllegalArgumentException("Should not have startTime or endTime");
+				
+			}
+			
+		}
+		
+		if (getCourseFromCatalogue(name, section) != null) {
+			
+			throw new IllegalArgumentException("Cannot add a duplicate course");
+			
+		} else {
+			
+			Course newCourse = new Course(name, title, section, instructorId, meetingDays, newStartTime, newEndTime);
+			
+			createNewCourse(newCourse);
+		}
 	}
 	
 	/**
