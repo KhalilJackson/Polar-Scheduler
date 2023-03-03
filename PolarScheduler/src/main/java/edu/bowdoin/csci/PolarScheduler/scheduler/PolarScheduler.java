@@ -141,13 +141,13 @@ public class PolarScheduler {
 		Integer newEndTime = Integer.valueOf(transition2);
 		
 		
-		if ((newStartTime == null) || (startTime == null) || (startTime == "null")) {
+		if ((newStartTime == null) || (startTime == "")) {
 			
 			throw new IllegalArgumentException("Missing start time for non-Arranged course.");
 			
 		}
-		
-		if ((newEndTime == null) || (endTime == null) || (endTime == "null")) {
+		//(newEndTime == null) || (endTime == null) || (endTime == "null") || (endTime == "")
+		if ((newEndTime == null) || (endTime == "")) {
 			
 			throw new IllegalArgumentException("Missing end time for non-Arranged course.");
 			
