@@ -83,12 +83,12 @@ public class Course {
 		
 		//Ensure name is not null or empty string
 		if ((name == null) || (name == "")) {
-			throw new IllegalArgumentException("Invalid Course Name.");
+			throw new IllegalArgumentException("Invalid course name.");
 		}
 		
 		//Ensure name is between 8-9 characters
 		if ((name.length() < 8) || (name.length() > 9)) {
-			throw new IllegalArgumentException("Invalid Course Name.");
+			throw new IllegalArgumentException("Invalid course name.");
 		}
 		
 		//Iterate through string by each character
@@ -103,14 +103,13 @@ public class Course {
 		    }
 		    
 		    //Ensures there is a space in between the letters and numbers
-		    if ((name.charAt(index) == ' ') && (space == false)) {
+		    if ((name.charAt(index) == ' ') && (space == false) && ((letterCounter == 3) || (letterCounter == 4))) {
 		    	space = true;
 		    }
 		    
 		    //Ensures numbers are the last 4 characters in the name
 		    if ((Character.isDigit(name.charAt(index))) && ((letterCounter == 3) || (letterCounter == 4)) && (space == true) && (numberCounter < 4)) {
 		    
-		    	
 		    	numberCounter++;
 		    }
 		    
@@ -119,6 +118,8 @@ public class Course {
 		
 		if (((letterCounter == 3) || (letterCounter == 4)) && (space == true) && (numberCounter == 4)) {
 		this.name = name;
+		} else {
+			throw new IllegalArgumentException("Invalid course name.");
 		}
 	}
 	
