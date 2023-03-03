@@ -79,126 +79,164 @@ public class ArrayList<E> extends AbstractList<E> {
 	    }
 	  }
 	
+	/**
+	 * Returns the size of the ArrayList.
+	 */
 	@Override
 	public int size() {
 		return size;
 	}
 	
+	/**
+	 * Boolean value that lets us know if the ArrayList is empty.
+	 */
 	@Override
 	public boolean isEmpty() {
 		return size == 0;
 	}
 	
+	/**
+	 * Adds element to the list.
+	 */
 	@Override
 	public boolean add(E element) {
 		
-			ensureCapacity(size + 1);
-		    list[size] = element;
-		    size++;
-		    return true;
+		//Ensure list has capacity for element
+		ensureCapacity(size + 1);
+		
+		//Add element to end of list and increment size
+	    list[size] = element;
+	    size++;
 	    
+	    //Return true
+	    return true;   
 	}
 	
+	/**
+	 * Adds element at specific point in the list.
+	 */
 	@Override
 	public void add(int index, E element) {
 		
+		//Ensures index within bounds
 		if (((size == 0) & (index > 0)) || (index < 0) || (index > size)) {
 			throw new IndexOutOfBoundsException();
-			
 		}
 		
-		
+		//Ensures element is not null
 		if (element == null) {
 			
 			throw new NullPointerException();
 		}
 		
+		//Ensures list does not contain element
 		if (contains(element)) {
 			throw new IllegalArgumentException();
 		}
 		
-
+		//Ensures list has enough space for the element
 		ensureCapacity(size + 1);
 	
-	    // shift all existing elements right starting at index
+	    //Shift all existing elements right starting at index
 	    for (int i = size; i > index; i--) {
 	      list[i] = list[i - 1];
 	    }
 	
 	    list[index] = element;
 	    size++;
-  
 	}
 	
+	/**
+	 * Get element at particular index.
+	 */
 	@Override
 	public E get(int index) {
 		
+		//Ensure index is within bounds
 		if (index > (size() - 1)) {
 			
 			throw new IndexOutOfBoundsException();
 		} else {
 			
+			//Return element at index
 			return (E) list[index];
-			
 		}
-		
 	}
 	
+	/**
+	 * Sets element at a particular index.
+	 */
 	@Override
 	public E set(int index, E element) {
 		
+		//Ensure index is in bounds
 		if ((index >= size)) {
 			
 			throw new IndexOutOfBoundsException();
 		}
 		
+		//Ensure element is not null
 		if (element == null) {
 			
 			throw new NullPointerException();
 		}
 		
+		//Ensure list does not contain element
 		if (contains(element)) {
 			
 			throw new IllegalArgumentException();
-			
 		}
 		
 	    E previousElement = (E) list[index];
 	    list[index] = element;
 	    return previousElement;
-	    
 	}
 	
+	/**
+	 * Removes element at index.
+	 */
 	@Override
 	public E remove(int index) {
+		
+		//Get element at index
 	    E removedElement = get(index);
 	    size--;
 	
-	    // shift all existing elements left starting at index
+	    //Shift all existing elements left starting at index
 	    for (int i = index; i < size; i++) {
 	    	list[i] = list[i + 1];
 	    	
 	    }
 	
-	    // clear the now-unused space in the array
+	    //Clear the now-unused space in the array
 	    list[size] = null;
 	
+	    //Return the removed element
 	    return removedElement;
-	  }
+	}
 	
+	/**
+	 * Iterates through list to see if object exists inside.
+	 */
 	@Override
 	public boolean contains(Object obj) {
 		
+		//Iterate through list by index
 		for (int i = 0; i < size; i++) {
 			
+			//If index contains object, return true
 			if (list[i].equals(obj)) {
 	        return true;
 	        }
 	    }
-	    return false;
-	    
+		
+		//Else, return false
+	    return false;  
 	}
 	
+	/**
+	 * To string method that formats list contents.
+	 */
 	@Override
 	public String toString() {
 		
@@ -215,8 +253,5 @@ public class ArrayList<E> extends AbstractList<E> {
 		}
 		
 		return str + "]";
-		
 	}
-
-
 }
