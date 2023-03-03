@@ -94,7 +94,10 @@ public class Course {
 		//Iterate through string by each character
 		for (int index = 0; index < name.length(); index++){
 			
-		    //char character = name.charAt(index);
+			//Ensures first character is not a space
+			if (name.charAt(0) == ' ') {
+				throw new IllegalArgumentException("Invalid course name.");
+			}
 		    
 			//Ensures character is one of the first 3-4 letters in the string
 		    if ((Character.isLetter(name.charAt(index))) && (numberCounter == 0) && (space == false) && (letterCounter < 4)) {
