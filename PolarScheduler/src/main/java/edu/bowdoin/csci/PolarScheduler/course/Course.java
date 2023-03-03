@@ -33,7 +33,7 @@ public class Course {
 		
 		//Ensures title is not null or an empty string
 		if ((title == null) || (title == "")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid title.");
 		} else {
 		this.title = title;
 		}
@@ -43,12 +43,12 @@ public class Course {
 		return section;
 	}
 	
-
+	
 	public void setSection(String section) {
 		
 		//Ensures section is between 1-4 characters
-		if ((section.length() < 1) || (section.length() > 4)) {
-			throw new IllegalArgumentException();
+		if ((section.length() < 1) || (section.length() > 4) || (section == null)) {
+			throw new IllegalArgumentException("Invalid section.");
 		} else {
 			this.section = section;
 		}
@@ -64,7 +64,7 @@ public class Course {
 	public void setInstructorId(String instructorId) {
 		
 		if (((instructorId == null) || (instructorId == "")) || (instructorId.length() > 20) || (instructorId.contains(" "))) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid instructor id.");
 		} else {
 		this.instructorId = instructorId;
 		}
@@ -319,7 +319,7 @@ public class Course {
 			
 		} else {
 			
-			if (s > 1300) {
+			if (s >= 1300) {
 				
 				x = (x - 1200)/100;
 				
