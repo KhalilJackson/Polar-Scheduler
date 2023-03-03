@@ -76,8 +76,50 @@ public class Course {
 	//What do I do for this?
 	private void setName(String name) {
 		
-		this.name = name;
+		int letterCounter = 0;
+		int numberCounter = 0;
 		
+		boolean space = false;
+		
+		//Ensure name is not null or empty string
+		if ((name == null) || (name == "")) {
+			throw new IllegalArgumentException("Invalid Course Name.");
+		}
+		
+		//Ensure name is between 8-9 characters
+		if ((name.length() < 8) || (name.length() > 9)) {
+			throw new IllegalArgumentException("Invalid Course Name.");
+		}
+		
+		//Iterate through string by each character
+		for (int index = 0; index < name.length(); index++){
+			
+		    //char character = name.charAt(index);
+		    
+			//Ensures character is one of the first 3-4 letters in the string
+		    if ((Character.isLetter(name.charAt(index))) && (numberCounter == 0) && (space == false) && (letterCounter < 4)) {
+		    	
+		    	letterCounter++;
+		    }
+		    
+		    //Ensures there is a space in between the letters and numbers
+		    if ((name.charAt(index) == ' ') && (space == false)) {
+		    	space = true;
+		    }
+		    
+		    //Ensures numbers are the last 4 characters in the name
+		    if ((Character.isDigit(name.charAt(index))) && ((letterCounter == 3) || (letterCounter == 4)) && (space == true) && (numberCounter < 4)) {
+		    
+		    	
+		    	numberCounter++;
+		    }
+		    
+		    //throw new IllegalArgumentException("Invalid Course Name.");
+		}
+		
+		if (((letterCounter == 3) || (letterCounter == 4)) && (space == true) && (numberCounter == 4)) {
+		this.name = name;
+		}
 	}
 	
 	public String getMeetingDays() {
