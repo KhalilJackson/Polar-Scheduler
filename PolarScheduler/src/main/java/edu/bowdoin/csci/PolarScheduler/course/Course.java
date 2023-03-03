@@ -175,7 +175,7 @@ public class Course {
 		
 		//If there are duplicates, throw exception
 		if (meetingDays.length() != check.size()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid meeting days and times.");
 		}
 		
 		//If days are not of acceptable characters, throw exception		
@@ -184,7 +184,7 @@ public class Course {
 			if ((day == 'M') || (day == 'T') || (day == 'W') || (day == 'H') || (day == 'F') || (day == 'A')) {
 				
 			} else {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Invalid meeting days and times.");
 			}
 		}
 		
@@ -193,28 +193,28 @@ public class Course {
 		if ((meetingDays.contains("A"))) {
 			
 			if ((meetingDays.length() > 1)) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Invalid meeting days and times.");
 			}
 			
 			if ((startTime != 0) || (endTime != 0)) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Invalid meeting days and times.");
 			}
 			
 		}
 		
 		//Makes sure start time falls within acceptable range
 		if ((startTime < 0) || (startTime > 2359)) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid meeting days and times.");
 		}
 		
 		//Makes sure end time falls within acceptable range
 		if ((endTime < 0) || (endTime > 2359)) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid meeting days and times.");
 		}
 		
 		//Makes sure end time is after start time
 		if (startTime > endTime) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid meeting days and times.");
 		}
 		
 		this.meetingDays = meetingDays;
