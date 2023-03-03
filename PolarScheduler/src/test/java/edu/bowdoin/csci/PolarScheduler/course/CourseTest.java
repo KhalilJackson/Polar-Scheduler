@@ -11,17 +11,15 @@ public class CourseTest {
     
     private Course course = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW");
 
-	
 	@BeforeEach
 	public void setUp() throws Exception {
 		course = new Course();
 	}
 	
-	
 	/**
 	* Tests the construction and setting of course names.
 	* 
-	* @return String representation of Course
+	* @void method
 	 */
 	@Test
     public void testInvalidCourseNames() {
@@ -79,21 +77,18 @@ public class CourseTest {
             
         } catch (IllegalArgumentException iae) {
             // Exception expected, carry on
-        } 
-        
+        }    
     }
 	
-	
 	/**
-	* Tests the construction and setting of course names.
+	* Tests the setting of meeting days.
 	* 
-	* @return String representation of Course
+	* @void
 	 */
 	@Test
     public void testSetMeetingDays() {
 		
-		//course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
-//		
+		//Cannot have duplicates nor more than one character in meeting day when it is "A"
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -106,6 +101,7 @@ public class CourseTest {
 			
 		}
 		
+		//Cannot have duplicates
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -117,7 +113,8 @@ public class CourseTest {
 		} catch (IllegalArgumentException iae) {
 			
 		}
-		       
+		
+		//Cannot have duplicates
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -130,6 +127,7 @@ public class CourseTest {
 			
 		}
 		
+		//Cannot have duplicates
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -142,6 +140,7 @@ public class CourseTest {
 			
 		}
 		
+		//Cannot have duplicates
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -153,7 +152,8 @@ public class CourseTest {
 		} catch (IllegalArgumentException iae) {
 			
 		}
-	        
+	    
+		//Cannot have duplicates
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -166,6 +166,7 @@ public class CourseTest {
 			
 		}
 		
+		//Cannot have character that is not day of the week
 		try {
 			
 			course = new Course("CSCI 2335", "branch", "30 college", "Zubin", "Bronco");
@@ -176,41 +177,50 @@ public class CourseTest {
 			
 		} catch (IllegalArgumentException iae) {
 			
-		}
-        
+		}  
     }
 	
+	/**
+	* Tests the equals function.
+	* 
+	* @void
+	 */
 	@Test
 	public void testEquals() {
 		
 		Course test = new Course();
 		PolarScheduler tester = new PolarScheduler();
 		
+		//Should be false since it is null
 		Assertions.assertEquals(false, test.equals(null));
 		
+		//Should be false since the type is different
 		Assertions.assertEquals(false, test.equals(tester));
-				
 	}
 	
+	/**
+	* Tests the toString method.
+	* 
+	* @void
+	 */
 	@Test
 	public void testToString() {
 		
 		
 		course = new Course("EOS 1020", "Earth", "123", "Cooler", "A");
-				
+		
+		//Tests case where meetingdays is "A"
 		Assertions.assertEquals("EOS 1020,Earth,123,Cooler,A", course.toString());
 		
-		
+		//Tests case where meetingDays is not "A"
 		course = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", 1000, 1200);
-		Assertions.assertEquals("EOS 1020,Earth,123,Cooler,MTW,1000,1200", course.toString());
-				
+		Assertions.assertEquals("EOS 1020,Earth,123,Cooler,MTW,1000,1200", course.toString());		
 	}
 	
-	
 	/**
-	* Returns a comma separated value String of all Course fields.
+	* Test valid course names to ensure they are valid.
 	* 
-	* @return String representation of Course
+	* @void
 	 */
 	@Test
 	public void testValidCourseNames() {
@@ -223,19 +233,17 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
-		
 	}
 	
-	
 	/**
-	* Returns a comma separated value String of all Course fields.
+	* Tests invalid course titles.
 	* 
-	* @return String representation of Course
+	* @void
 	 */
 	@Test
 	public void testInvalidCourseTitles() {
 		
-
+		//Null title should fail
 	    try {
 	       
 	        course.setTitle(null);
@@ -245,6 +253,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }
 	    
+	    //Empty string should fail
 	    try {
 	    	
 	    	course.setTitle("");
@@ -253,10 +262,13 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
-		
 	}
 	
-	
+	/**
+	* Tests valid course titles.
+	* 
+	* @void
+	 */
 	@Test
 	public void testValidCourseTitles() {
 		
@@ -269,13 +281,17 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
-	    
 	}
 	
-	
+	/**
+	* Tests invalid course section.
+	* 
+	* @void
+	 */
 	@Test
 	public void testInvalidCourseSection() {
 		
+		//Cannot have empty string
 	    try {
 
 	        course.setSection("");
@@ -285,7 +301,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }
 	    
-	    
+	    //Cannot have more than four characters
 	    try {
 
 	    	course.setSection("12345");
@@ -294,9 +310,13 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
-		
 	}
 	
+	/**
+	* Tests valid course sections.
+	* 
+	* @void
+	 */
 	@Test
 	public void testValidCourseSection() {
 		
@@ -308,14 +328,17 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
-		
-		
 	}
 	
-	
+	/**
+	* Tests invalid course instructors.
+	* 
+	* @void
+	 */
 	@Test
 	public void testInvalidCourseInstructors() {
 		
+		//Cannot be null
 	    try {
 
 	        course.setInstructorId(null);
@@ -325,36 +348,42 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }
 	    
-	    
+	    //Cannot be empty string
 	    try {
 
 	    	course.setInstructorId("");
-	        Assertions.fail("Trying to set an string of more than four characters as course section should throw an IllegalArgumentException, but did not");           
+	        Assertions.fail("Trying to set an empty string should throw an IllegalArgumentException, but did not");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
 	    
+	    //Cannot be longer than 20 characters
 	    try {
 
 	        course.setInstructorId("thisisaverylongidwithmorethantwentycharacters");
-	        Assertions.fail("Trying to set an empty string as course section should throw an IllegalArgumentException, but did not");           
+	        Assertions.fail("Trying to set a string longer than twenty characters should throw an IllegalArgumentException, but did not");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
 	    
+	    //Cannot have special characters
 	    try {
 
 	        course.setInstructorId("Dr. K");
-	        Assertions.fail("Trying to set an empty string as course section should throw an IllegalArgumentException, but did not");           
+	        Assertions.fail("Trying to use a special character should throw an IllegalArgumentException, but did not");           
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }
-		
 	}
 	
+	/**
+	* Tests valid Instructors.
+	* 
+	* @void
+	 */
 	@Test
 	public void testValidInstructors() {
 		
@@ -366,14 +395,17 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }			
-	    
 	}
 	
-	
+	/**
+	* Tests invalid meeting days and start times.
+	* 
+	* @void
+	 */
 	@Test
 	public void testInvalidMeetingDaysStartTimesEndTimes() {
 		
-		
+		//Must use weekday character
 	    try {
 
 	    	course.setMeetingDaysAndTime("Z", 1000, 1200);
@@ -383,6 +415,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //Must use weekday character
 	    try {
 
 	    	course.setMeetingDaysAndTime("k", 1000, 1200);
@@ -392,6 +425,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //Cannot use a special character
 	    try {
 
 	    	course.setMeetingDaysAndTime("@", 1000, 1200);
@@ -401,6 +435,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //Cannot use numbers
 	    try {
 
 	    	course.setMeetingDaysAndTime("2", 1000, 1200);
@@ -410,7 +445,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
-	    
+	    //Cannot use duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("MM", 1000, 11000);
@@ -420,6 +455,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //Cannot use duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("TT", 1000, 11000);
@@ -429,6 +465,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //Cannot use duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("WW", 1000, 11000);
@@ -438,6 +475,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //Cannot use duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("HH", 1000, 11000);
@@ -447,6 +485,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }
 	    
+	    //Cannot use duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("FF", 1000, 11000);
@@ -456,6 +495,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //Cannot use duplicates or more than one day if it is "A"
 	    try {
 
 	    	course.setMeetingDaysAndTime("AA", 1000, 11000);
@@ -465,16 +505,17 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }	
 	    
+	    //End time too big
 	    try {
 
 	    	course.setMeetingDaysAndTime("AM", 1000, 11000);
-	    	Assertions.fail("Should throw an IllegalArgumentException for having more than A in meeting days but did not");      
+	    	Assertions.fail("Should throw an IllegalArgumentException for having too big end time but did not");      
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }	
 		
-		
+		//Start time too big
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 4000, 1);
@@ -484,6 +525,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
+	    //Cannot have negatives
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", -10, 1);
@@ -493,7 +535,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
-	    
+	    //End time too big
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 1, 4000);
@@ -503,6 +545,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
+	    //Cannot have negatives
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 1000, -1000);
@@ -512,7 +555,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
-	    
+	    //Cannot have A and times
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 1600, 1200);
@@ -522,6 +565,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
+	    //Cannot have A and times
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 0000, 1000);
@@ -531,6 +575,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
+	    //Cannot have A and times
 	    try {
 
 	    	course.setMeetingDaysAndTime("A", 1000, 0000);
@@ -540,7 +585,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
-		
+		//Cannot have duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("MM", 1, 1);
@@ -550,6 +595,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
+	    //Cannot have duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("TT", 1, 1);
@@ -557,8 +603,9 @@ public class CourseTest {
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
-	    }		
+	    }
 	    
+	    //Cannot have duplicates
 	    try {
 
 	    	course.setMeetingDaysAndTime("AA", 1, 1);
@@ -568,7 +615,7 @@ public class CourseTest {
 	        // Exception expected, carry on
 	    }		
 	    
-	    
+	    //S
 	    try {
 
 	    	course.setMeetingDaysAndTime("M", 4000, 1);
@@ -641,11 +688,13 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }		
-	    
-	    
-	  
 	}
 	
+	/**
+	* Tests getMeetingDays.
+	* 
+	* @void
+	 */
 	@Test
 	public void testGetMeetingDays() {
 		
@@ -654,6 +703,11 @@ public class CourseTest {
 		Assertions.assertEquals("MTW", course.getMeetingDays());
 	}
 	
+	/**
+	* Tests getStartTime.
+	* 
+	* @void
+	 */
 	@Test
 	public void testGetStartTime() {
 		
@@ -663,6 +717,11 @@ public class CourseTest {
 		
 	}
 	
+	/**
+	* Tests getEndTime.
+	* 
+	* @void
+	 */
 	@Test
 	public void testGetEndTime() {
 		
@@ -671,7 +730,11 @@ public class CourseTest {
 		Assertions.assertEquals(1400, course.getEndTime());
 	}
 	
-	
+	/**
+	* Tests getMeetingString.
+	* 
+	* @void
+	 */
 	@Test
 	public void testMeetingString() {
 		
@@ -680,7 +743,4 @@ public class CourseTest {
 		Assertions.assertEquals("Arranged", course.getMeetingString());
 
 	}
-	
-	
-
 }

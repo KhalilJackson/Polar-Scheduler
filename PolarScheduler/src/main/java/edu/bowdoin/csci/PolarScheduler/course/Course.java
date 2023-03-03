@@ -6,14 +6,14 @@ import java.util.Set;
 
 public class Course {
 	
-	private static final int MIN_NAME_LENGTH = 8;
-	private static final int MAX_NAME_LENGTH = 9;
-	private static final int MIN_LETTER_COUNT = 3;
-	private static final int MAX_LETTER_COUNT = 4;
-	private static final int DIGIT_COUNT = 4;
-	private static final int SECTION_LENGTH = 4;
-	private static final int UPPER_HOUR = 24;
-	private static final int UPPER_MINUTE = 60;
+//	private static final int MIN_NAME_LENGTH = 8;
+//	private static final int MAX_NAME_LENGTH = 9;
+//	private static final int MIN_LETTER_COUNT = 3;
+//	private static final int MAX_LETTER_COUNT = 4;
+//	private static final int DIGIT_COUNT = 4;
+//	private static final int SECTION_LENGTH = 4;
+//	private static final int UPPER_HOUR = 24;
+//	private static final int UPPER_MINUTE = 60;
 	
 	private String name;
 	private String title;
@@ -23,12 +23,16 @@ public class Course {
 	private int startTime;
 	private int endTime;
 	
-	
+	/**
+	 * Returns title.
+	 */
 	public String getTitle() {
 		return title;
 	}
 	
-
+	/**
+	 * Sets title.
+	 */
 	public void setTitle(String title) {
 		
 		//Ensures title is not null or an empty string
@@ -39,11 +43,16 @@ public class Course {
 		}
 	}
 	
+	/**
+	 * Gets section.
+	 */
 	public String getSection() {
 		return section;
 	}
 	
-	
+	/**
+	 * Sets section.
+	 */
 	public void setSection(String section) {
 		
 		//Ensure section is not null
@@ -59,26 +68,36 @@ public class Course {
 		}
 	}
 	
-	
+	/**
+	 * Gets instructor ID.
+	 */
 	public String getInstructorId() {
 		return instructorId;
 	}
 	
-	//Ensures instructor id is not null or empty string,
-	//no longer than 20 characters, and has no spaces
+	/**
+	 * Sets instructor ID.
+	 */
 	public void setInstructorId(String instructorId) {
 		
+		//Ensures instructor id is not null or empty string, no longer than 20 characters, and has no spaces
 		if (((instructorId == null) || (instructorId == "")) || (instructorId.length() > 20) || (instructorId.contains(" "))) {
 			throw new IllegalArgumentException("Invalid instructor id.");
 		} else {
 		this.instructorId = instructorId;
 		}
 	}
+	
+	/**
+	 * Gets name.
+	 */
 	public String getName() {
 		return name;
 	}
 	
-	//What do I do for this?
+	/**
+	 * Sets name by ensuring it follows the convention of 3-4 letters, a space, then 4 numbers.
+	 */
 	private void setName(String name) {
 		
 		int letterCounter = 0;
@@ -121,7 +140,6 @@ public class Course {
 		    	numberCounter++;
 		    }
 		    
-		    //throw new IllegalArgumentException("Invalid Course Name.");
 		}
 		
 		if (((letterCounter == 3) || (letterCounter == 4)) && (space == true) && (numberCounter == 4)) {
@@ -131,21 +149,37 @@ public class Course {
 		}
 	}
 	
+	/**
+	 * Gets meeting days.
+	 */
 	public String getMeetingDays() {
 		return meetingDays;
 	}
+	
+	/**
+	 * Gets start time.
+	 */
 	public int getStartTime() {
 		return startTime;
 	}
+	
+	/**
+	 * Gets end time.
+	 */
 	public int getEndTime() {
 		return endTime;
 	}
 	
+	/**
+	 * Course constructor.
+	 */
 	public Course() {
 		super();
-
 	}
 	
+	/**
+	 * 
+	 */
 	public Course(String name, String title, String section, String instructorId, String meetingDays) {
 		super();
 		
@@ -155,10 +189,11 @@ public class Course {
 		setSection(section);
 		setInstructorId(instructorId);
 		setMeetingDays(meetingDays);
-		
 	}
 	
-	
+	/**
+	 * Course constructor that takes in name, title, section, instructor ID, meeting days, start time, and end time.
+	 */
 	public Course(String name, String title, String section, String instructorId, String meetingDays, int startTime,
 			int endTime) {
 		super();
@@ -171,7 +206,9 @@ public class Course {
 		setMeetingDaysAndTime(meetingDays, startTime, endTime);
 	}
 	
-	
+	/**
+	 * Sets meeting days by making sure there are no duplicated or invalid characters.
+	 */
 	public void setMeetingDays(String s) {
 		
 		
@@ -206,13 +243,15 @@ public class Course {
 			if ((s.length() > 1)) {
 				//System.out.println("Found more than one");
 				throw new IllegalArgumentException("Can't have more than a single A if A is used");
-			}
-			
+			}	
 		}
-		
 		meetingDays = s;
 	}
 	
+	/**
+	 * Sets meeting days and time ensuring the days are valid like setMeetingDays while ensuring the
+	 * start times and end times are valid for each other and for the scheduled days.
+	 */
 	public void setMeetingDaysAndTime(String meetingDays, int startTime, int endTime) {
 		
 		//Creates a hash set to get rid of duplicate characters
@@ -281,23 +320,32 @@ public class Course {
 		this.meetingDays = meetingDays;
 		this.startTime = startTime;
 		this.endTime = endTime;			
-		
 	}
 	
+	/**
+	 * Gets the meeting string by returning "Arranged" when null or meeting days is "A" or
+	 * by calling a helper method to format the int time strings.
+	 */
 	public String getMeetingString() {
 		
+		//If A or null, return arranged 
 		if ((meetingDays == "A") || (meetingDays == null)) {
 			
 			return "Arranged";
 		} else {
 			
+			//Call helper to properly format int as 12hr format times to be added to string
 			String time = meetingDays + " " + getTimeString(startTime) + "-" + getTimeString(endTime);
 			
 			return time;
-			
 		}
 	}
 	
+	/**
+	 * Gets the time string by taking in an int, converting it to a float, dividing by 100 to 
+	 * place the decimal between the four digits, then replacing the decimal with a colon for
+	 * the formatted time and adding AM or PM depending on the original 24hr format input.
+	 */
 	private String getTimeString(int s) {
 		
 		String code;
@@ -354,16 +402,20 @@ public class Course {
 			code = Float.toString(x).replace('.', ':') + "PM";
 			//System.out.println(code);
 			return code; 
-			
 		}
-			
 	}
 	
+	/**
+	 * Hash code for the Course fields.
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(endTime, instructorId, meetingDays, name, section, startTime, title);
 	}
 	
+	/**
+	 * Boolean variable that tells us if the object equals the other object.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -379,8 +431,6 @@ public class Course {
 				&& Objects.equals(title, other.title);
 	}
 	
-	
-	
 	/**
 	* Returns a comma separated value String of all Course fields.
 	* 
@@ -394,5 +444,4 @@ public class Course {
 	    return name + "," + title + "," + section + "," + instructorId + "," + meetingDays + ","
 	            + startTime + "," + endTime;
 	}
-
 }
