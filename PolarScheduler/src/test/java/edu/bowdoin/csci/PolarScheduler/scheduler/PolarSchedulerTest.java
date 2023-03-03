@@ -134,7 +134,6 @@ public class PolarSchedulerTest {
 		//Tries to create a course with a null startTime
 	    try {
 	    	
-	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
 	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", null, 1220);
 	    	Assertions.fail("Should throw IllegalArgumentException for having null startTime but did not");
 	                   
@@ -148,7 +147,6 @@ public class PolarSchedulerTest {
 		//Tries to create a course with null endTime
 	    try {
 	    	
-	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
 	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", 1120, null);
 	    	Assertions.fail("Should throw IllegalArgumentException for having null endTime but did not");
 	                   
@@ -162,9 +160,132 @@ public class PolarSchedulerTest {
 		//Tries to create a course with A 
 	    try {
 	    	
-	    	//Course test = new Course("EOS 1020", "Earth", "123", "Cooler", "MTW", null, 1220);
 	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", 1120, 1220);
 	    	Assertions.fail("Should throw IllegalArgumentException for having non Integer endtime");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+		//Tries to create a course with negative start time 
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", -1120, 1220);
+	    	Assertions.fail("Should throw IllegalArgumentException for having negative startTime");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+		//Tries to create a course with more than one weekday when it is A 
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "AM", 0, 0);
+	    	Assertions.fail("Should throw IllegalArgumentException for having negative startTime");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+		//Tries to create a course with A weekday and a start and end time
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "A", 1000, 1200);
+	    	Assertions.fail("Should throw IllegalArgumentException for having negative startTime");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+	}
+	
+	/**
+	* Tests createNewCourse with all Course class parameters as Strings.
+	* 
+	* @void
+	 */
+	@Test
+	public void testCreateNewCourse3() {
+		
+		//Add courses to catalogue
+    	scheduler.createNewCourse(course1);
+    	scheduler.createNewCourse(course2);
+	                   
+    	Assertions.assertEquals(course2, scheduler.getCourseFromCatalogue("CSCI 1101", "321"));
+		
+		//Tries to create a duplicate course
+	    try {
+	    	
+	    	scheduler.createNewCourse("EOS 1020", "Earth", "123", "Cooler", "MTW", "1120", "1220");
+	    	Assertions.fail("Should throw IllegalArgumentException for creating duplicate class but did not");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+		//Tries to create a course with a null startTime
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", null, "1220");
+	    	Assertions.fail("Should throw IllegalArgumentException for having null startTime but did not");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }	    
+	    
+		//Tries to create a course with null endTime
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", "1120", null);
+	    	Assertions.fail("Should throw IllegalArgumentException for having null endTime but did not");	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	        
+		//Tries to create a course with A 
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", "1120", "1220");
+	    	Assertions.fail("Should throw IllegalArgumentException for having non Integer endtime");
+	                           
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+	  //Tries to create a course with negative start time 
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "TWH", "-1120", "1220");
+	    	Assertions.fail("Should throw IllegalArgumentException for having negative startTime");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+		//Tries to create a course with more than one weekday when it is A 
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "AM", "0", "0");
+	    	Assertions.fail("Should throw IllegalArgumentException for having negative startTime");
+	                   
+	        
+	    } catch (IllegalArgumentException iae) {
+	        // Exception expected, carry on
+	    }
+	    
+		//Tries to create a course with A weekday and a start and end time
+	    try {
+	    	
+	    	scheduler.createNewCourse("CSCI 1101", "Computer", "321", "Warmer", "A", "1000", "1200");
+	    	Assertions.fail("Should throw IllegalArgumentException for having negative startTime");
 	                   
 	        
 	    } catch (IllegalArgumentException iae) {
