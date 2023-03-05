@@ -160,33 +160,21 @@ public class PolarScheduler {
 			 }
 		}
 		
-		
-		//Iterate through endTime
-		
+		//Converts startTime from String to Integer
 		int transition1 = Integer.parseInt(startTime);
 		Integer newStartTime = Integer.valueOf(transition1);
 		
+		//Converts endTiem from String to Integer
 		int transition2 = Integer.parseInt(endTime);
 		Integer newEndTime = Integer.valueOf(transition2);
 		
-		
-//		if (newStartTime == null || startTime == null || "null".equals(startTime) || "".equals(startTime)) {
-//			
-//			throw new IllegalArgumentException("Missing start time for non-Arranged course.");
-//			
-//		}
-//		
-//		if (newEndTime == null || endTime == null || "null".equals(endTime) || "".equals(endTime)) {
-//			
-//			throw new IllegalArgumentException("Missing end time for non-Arranged course.");
-//			
-//		}
-		
+		//Ensures times are within the right range
 		if (((newStartTime < 0000) || (newStartTime >2359)) || ((newEndTime < 0) || newEndTime > 2359)) {
 			
 			throw new IllegalArgumentException("Invalid start time or end time");
 		}
 		
+		//Makes sure arranged classes only have one meeting day and no times
 		if (meetingDays.contains("A")) {
 			
 			if (meetingDays.length() > 1) {
@@ -200,9 +188,9 @@ public class PolarScheduler {
 				throw new IllegalArgumentException("Should not have startTime or endTime");
 				
 			}
-			
 		}
 		
+		//Ensures the course is not already in the catalogue
 		if (getCourseFromCatalogue(name, section) != null) {
 			
 			throw new IllegalArgumentException("Cannot add a duplicate course.");
@@ -348,7 +336,7 @@ public class PolarScheduler {
 	}
 	
 	/**
-	* Sets schedule title solong as it is not null.
+	* Sets schedule title so long as it is not null.
 	* 
 	* @void
 	 */

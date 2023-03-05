@@ -559,17 +559,7 @@ public class CourseTest {
 	        
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
-	    }	
-	    
-//	    //End time too big
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("AM", 1000, 11000);
-//	    	Assertions.fail("Should throw an IllegalArgumentException for having too big end time but did not");      
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }	
+	    }		
 		
 		//Start time too big
 	    try {
@@ -630,112 +620,7 @@ public class CourseTest {
 	    } catch (IllegalArgumentException iae) {
 	        // Exception expected, carry on
 	    }	
-	    
-	   	
-	    
-//		//Start time and end time cannot be the same
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("M", 1, 1);
-//	        Assertions.fail("Duplicate days");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-	    
-//	    //Cannot have duplicates
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("TT", 1, 1);
-//	        Assertions.fail("Duplicate days");         
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }
-//	    
-//	    //Cannot have duplicates
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("AA", 1, 1);
-//	        Assertions.fail("Two As");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-//	    
-//	    //S
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("M", 4000, 1);
-//	        Assertions.fail("Star time too big");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-//	    
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("M", -10, 1);
-//	        Assertions.fail("Start time to small");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-//	    
-//	    
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("M", 1, 4000);
-//	        Assertions.fail("Endtime to BIG");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-//	    
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("M", 1000, -1000);
-//	        Assertions.fail("Endtime to SMALL");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-//	    
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("M", 1200, 1000);
-//	        Assertions.fail("Endtime to SMALL");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }	
-//	    
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("A", 1600, 1200);
-//	        Assertions.fail("Day is A while there are start and end times");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-//	    
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("A", 0000, 1000);
-//	        Assertions.fail("Day is A with an end time");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
-//	    
-//	    try {
-//
-//	    	course.setMeetingDaysAndTime("A", 1000, 0000);
-//	        Assertions.fail("Day is A with a start time");           
-//	        
-//	    } catch (IllegalArgumentException iae) {
-//	        // Exception expected, carry on
-//	    }		
+	    		
 	}
 	
 	/**
