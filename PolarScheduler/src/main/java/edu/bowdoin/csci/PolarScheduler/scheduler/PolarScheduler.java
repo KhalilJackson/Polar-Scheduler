@@ -134,6 +134,14 @@ public class PolarScheduler {
 	 */
 	public void createNewCourse(String name, String title, String section, String instructorId, String meetingDays, String startTime, String endTime) {
 		
+		if (startTime == null || "".equals(startTime)) {
+			throw new IllegalArgumentException("Missing start time for non-Arranged course.");
+		}
+		
+		if (endTime == null || "".equals(endTime)) {
+			throw new IllegalArgumentException("Missing end time for non-Arranged course.");
+		}
+		
 		int transition1 = Integer.parseInt(startTime);
 		Integer newStartTime = Integer.valueOf(transition1);
 		
@@ -141,17 +149,17 @@ public class PolarScheduler {
 		Integer newEndTime = Integer.valueOf(transition2);
 		
 		
-		if (newStartTime == null || startTime == null || "null".equals(startTime) || "".equals(startTime)) {
-			
-			throw new IllegalArgumentException("Missing start time for non-Arranged course.");
-			
-		}
-		
-		if (newEndTime == null || endTime == null || "null".equals(endTime) || "".equals(endTime)) {
-			
-			throw new IllegalArgumentException("Missing end time for non-Arranged course.");
-			
-		}
+//		if (newStartTime == null || startTime == null || "null".equals(startTime) || "".equals(startTime)) {
+//			
+//			throw new IllegalArgumentException("Missing start time for non-Arranged course.");
+//			
+//		}
+//		
+//		if (newEndTime == null || endTime == null || "null".equals(endTime) || "".equals(endTime)) {
+//			
+//			throw new IllegalArgumentException("Missing end time for non-Arranged course.");
+//			
+//		}
 		
 		if (((newStartTime < 0000) || (newStartTime >2359)) || ((newEndTime < 0) || newEndTime > 2359)) {
 			
