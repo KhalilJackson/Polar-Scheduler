@@ -142,6 +142,27 @@ public class PolarScheduler {
 			throw new IllegalArgumentException("Missing end time for non-Arranged course.");
 		}
 		
+		//Iterate through startTime
+		for (int index = 0; index < startTime.length(); index++){
+			
+			//Ensures each character in the string is a digit
+			 if ((!Character.isDigit(startTime.charAt(index)))) {
+				 throw new IllegalArgumentException("Invalid start time or end time.");
+			 }
+		}
+		
+		//Iterate through endTime
+		for (int index = 0; index < endTime.length(); index++){
+			
+			//Ensures each character in the string is a digit
+			 if ((!Character.isDigit(endTime.charAt(index)))) {
+				 throw new IllegalArgumentException("Invalid start time or end time.");
+			 }
+		}
+		
+		
+		//Iterate through endTime
+		
 		int transition1 = Integer.parseInt(startTime);
 		Integer newStartTime = Integer.valueOf(transition1);
 		
