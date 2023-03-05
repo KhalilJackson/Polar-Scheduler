@@ -205,7 +205,7 @@ public class PolarScheduler {
 		
 		if (getCourseFromCatalogue(name, section) != null) {
 			
-			throw new IllegalArgumentException("Cannot add a duplicate course");
+			throw new IllegalArgumentException("Cannot add a duplicate course.");
 			
 		} else {
 			
